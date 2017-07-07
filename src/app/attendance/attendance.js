@@ -4,8 +4,7 @@ import {NewAttendance} from './newAttendance';
 const styles = {
   attendance: {
     fontWeight: 'bold',
-    textAlign: 'center',
-    padding: '40px'
+    textAlign: 'center'
   }
 };
 

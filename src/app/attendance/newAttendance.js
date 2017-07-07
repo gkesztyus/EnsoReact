@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
+import {TrainingDatePicker} from './trainingDatePicker';
 
 const styles = {
   attendance: {
     fontWeight: 'bold',
-    textAlign: 'center',
-    padding: '40px'
+    textAlign: 'center'
   }
 };
 
@@ -20,6 +20,10 @@ export class NewAttendance extends Component {
             <div className="row">
               <div className="col-lg-6">
                 <form role="form">
+                  <div className="form-group">
+                    <label>Edzés időpontja</label>
+                    <TrainingDatePicker/>
+                  </div>
                   <div className="form-group">
                     <label>Edzésvezető</label>
                     <select multiple className="form-control">
@@ -37,6 +41,10 @@ export class NewAttendance extends Component {
                       <option>Hegyes Endre</option>
                       <option>Bugris Valéria</option>
                     </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Edzés témája</label>
+                    <textarea className="form-control" rows="3"/>
                   </div>
                   <button type="submit" className="btn btn-default">Submit Button</button>
                   <button type="reset" className="btn btn-default">Reset Button</button>
