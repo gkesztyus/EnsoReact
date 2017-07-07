@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
 const styles = {
- attendance:{
+  attendance: {
     fontWeight: 'bold'
- }
+  }
 };
 
 export class Attendance extends Component {
