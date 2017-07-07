@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {NewAttendance} from './newAttendance';
 
 const styles = {
   attendance: {
@@ -14,6 +15,7 @@ export class Attendance extends Component {
       <div style={styles.attendance}>
         hello attendance!!!:)
         <button className="btn btn-primary" type="submit">Button</button>
+        <NewAttendance/>
       </div>
     );
   }
