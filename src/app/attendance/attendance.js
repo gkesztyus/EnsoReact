@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 
 const styles = {
   attendance: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: '40px'
   }
 };
 
@@ -11,6 +13,7 @@ export class Attendance extends Component {
     return (
       <div style={styles.attendance}>
         hello attendance!!!:)
+        <button className="btn btn-primary" type="submit">Button</button>
       </div>
     );
   }
