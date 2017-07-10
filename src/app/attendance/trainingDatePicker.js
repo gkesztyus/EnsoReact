@@ -1,35 +1,45 @@
 import React, {Component} from 'react';
-import InfiniteCalendar from 'react-infinite-calendar';
-import 'react-infinite-calendar/styles.css'; // only needs to be imported once
-// https://github.com/clauderic/react-infinite-calendar
-// Render the Calendar
-const today = new Date();
-const CalendarStyleObject = {
-  accentColor: '#448AFF',
-  floatingNav: {
-    background: 'rgba(56, 87, 138, 0.94)',
-    chevron: '#FFA726',
-    color: '#FFF'
-  },
-  headerColor: '#2e6da4',
-  selectionColor: '#559FFF',
-  textColor: {
-    active: '#FFF',
-    default: '#333'
-  },
-  todayColor: '#FFA726',
-  weekdayColor: '#337ab7'
-};
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 export class TrainingDatePicker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      startDate: moment()
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(date) {
+    this.setState({
+      startDate: date
+    });
+  }
+
   render() {
     return (
-      <InfiniteCalendar
-        width={300}
-        height={300}
-        selected={today}
-        theme={CalendarStyleObject}
-        />
+      <div>
+        <div className="hidden-xs">
+          <DatePicker
+            onChange={this.handleChange}
+            selected={this.state.startDate}
+            todayButton={'Mai napon'}
+            />
+        </div>
+        <div className="hidden-sm hidden-lg">
+          <DatePicker
+            onChange={this.handleChange}
+            selected={this.state.startDate}
+            todayButton={'Mai napon'}
+            withPortal
+            />
+        </div>
+      </div>
+
     );
   }
 }

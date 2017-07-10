@@ -17,13 +17,15 @@ export class NewAttendance extends Component {
               Új edzés felvétele
           </div>
           <div className="panel-body">
-            <div className="row">
-              <div className="col-lg-6">
-                <form role="form">
+            <form role="form">
+              <div className="row">
+                <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Edzés időpontja</label>
                     <TrainingDatePicker/>
                   </div>
+                </div>
+                <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Edzésvezető</label>
                     <select multiple className="form-control">
@@ -33,6 +35,8 @@ export class NewAttendance extends Component {
                       <option>Bugris Valéria</option>
                     </select>
                   </div>
+                </div>
+                <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Résztvevők</label>
                     <select multiple className="form-control">
@@ -42,15 +46,19 @@ export class NewAttendance extends Component {
                       <option>Bugris Valéria</option>
                     </select>
                   </div>
+                </div>
+                <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Edzés témája</label>
                     <textarea className="form-control" rows="3"/>
                   </div>
+                </div>
+                <div className="col-lg-2 col-xs-12">
                   <button type="submit" className="btn btn-default">Submit Button</button>
                   <button type="reset" className="btn btn-default">Reset Button</button>
-                </form>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
