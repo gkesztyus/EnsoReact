@@ -54,13 +54,9 @@ export class NewAttendance extends Component {
                   </div>
                 </div>
                 <div className="col-xs-12">
-                  <div className="row">
-                    <div className="col-xs-6 col-sm-2">
-                      <button type="submit" className="btn btn-primary btn-block">Mentés</button>
-                    </div>
-                    <div className="col-xs-6 col-sm-2">
-                      <button type="button" className="btn btn-default btn-block">Mégsem</button>
-                    </div>
+                  <div className="btn-group" role="group">
+                    <button type="submit" className="btn btn-primary">Mentés</button>
+                    <button type="button" className="btn btn-default">Mégsem</button>
                   </div>
                 </div>
               </div>
