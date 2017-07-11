@@ -9,6 +9,13 @@ const styles = {
 };
 
 export class NewAttendance extends Component {
+  constructor(props) {
+    super(props);
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+  handleCancel() {
+    this.props.onCancel();
+  }
   render() {
     return (
       <div style={styles.attendance}>
@@ -56,7 +63,7 @@ export class NewAttendance extends Component {
                 <div className="col-xs-12">
                   <div className="btn-group" role="group">
                     <button type="submit" className="btn btn-primary">Mentés</button>
-                    <button type="button" className="btn btn-default">Mégsem</button>
+                    <button type="button" className="btn btn-default" onClick={handleCancel}>Mégsem</button>
                   </div>
                 </div>
               </div>
