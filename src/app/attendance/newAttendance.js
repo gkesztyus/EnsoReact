@@ -19,13 +19,13 @@ export class NewAttendance extends Component {
           <div className="panel-body">
             <form role="form">
               <div className="row">
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-2 col-xs-12">
                   <div className="form-group">
                     <label>Edzés időpontja</label>
                     <TrainingDatePicker/>
                   </div>
                 </div>
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <div className="form-group">
                     <label>Edzésvezető</label>
                     <select multiple className="form-control">
@@ -36,7 +36,7 @@ export class NewAttendance extends Component {
                     </select>
                   </div>
                 </div>
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <div className="form-group">
                     <label>Résztvevők</label>
                     <select multiple className="form-control">
@@ -53,9 +53,15 @@ export class NewAttendance extends Component {
                     <textarea className="form-control" rows="3"/>
                   </div>
                 </div>
-                <div className="col-lg-2 col-xs-12">
-                  <button type="submit" className="btn btn-default">Submit Button</button>
-                  <button type="reset" className="btn btn-default">Reset Button</button>
+                <div className="col-xs-12">
+                  <div className="row">
+                    <div className="col-xs-6 col-sm-2">
+                      <button type="submit" className="btn btn-primary btn-block">Mentés</button>
+                    </div>
+                    <div className="col-xs-6 col-sm-2">
+                      <button type="button" className="btn btn-default btn-block">Mégsem</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
