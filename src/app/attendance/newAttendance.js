@@ -1,5 +1,7 @@
+/* eslint-disable no-alert */
 import React, {Component} from 'react';
 import {TrainingDatePicker} from './trainingDatePicker';
+import PropTypes from 'prop-types';
 
 const styles = {
   attendance: {
@@ -12,8 +14,12 @@ export class NewAttendance extends Component {
   constructor(props) {
     super(props);
     this.handleCancel = this.handleCancel.bind(this);
+    this.state = {
+
+    };
   }
   handleCancel() {
+    console.log('cancel!!!', this.props);
     this.props.onCancel();
   }
   render() {
@@ -63,7 +69,7 @@ export class NewAttendance extends Component {
                 <div className="col-xs-12">
                   <div className="btn-group" role="group">
                     <button type="submit" className="btn btn-primary">Mentés</button>
-                    <button type="button" className="btn btn-default" onClick={handleCancel}>Mégsem</button>
+                    <button type="button" className="btn btn-default" onClick={this.handleCancel}>Mégsem</button>
                   </div>
                 </div>
               </div>
@@ -74,3 +80,6 @@ export class NewAttendance extends Component {
     );
   }
 }
+NewAttendance.propTypes = {
+  onCancel: PropTypes.func
+};

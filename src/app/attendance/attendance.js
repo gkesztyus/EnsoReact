@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {Component} from 'react';
 import {NewAttendance} from './newAttendance';
 
@@ -10,15 +9,18 @@ const styles = {
 };
 
 export class Attendance extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    // console.log('this on bind:', this);
     this.handleToggleNewAttendance = this.handleToggleNewAttendance.bind(this);
+
     this.state = {
       newAttendanceVisible: false
     };
   }
 
   handleToggleNewAttendance() {
+    // console.log('toggle++++', this);
     this.setState({
       newAttendanceVisible: !this.state.newAttendanceVisible
     });
