@@ -3,8 +3,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import Multiselect from 'react-bootstrap-multiselect';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-bootstrap-multiselect/css/bootstrap-multiselect.css';
 /* https://github.com/Hacker0x01/react-datepicker
 https://hacker0x01.github.io/react-datepicker/#example-5 */
 
@@ -23,12 +25,21 @@ export class NewAttendance extends Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleLeadChange = this.handleLeadChange.bind(this);
     this.state = {
       newTrainingData: {
         date: moment(),
         lead: [],
         attendees: [],
         theme: ''
+      },
+      data: {
+        people: [
+          {value: 'Kesztyűs Gábor István', label: 'Kesztyűs Gábor'},
+          {value: 'Kéri Dávid'},
+          {value: 'Hegyes Endre'},
+          {value: 'Bugris Valéria'}
+        ]
       }
     };
   }
@@ -61,6 +72,12 @@ export class NewAttendance extends Component {
       }
     });
     console.log(this);
+  }
+  handleLeadChange(leads) {
+    console.log(this, leads);
+    for (const lead of leads) {
+      console.log('lead changed', lead, lead.label, lead.value, this);
+    }
   }
   render() {
     return (
@@ -99,6 +116,16 @@ export class NewAttendance extends Component {
                 <div className="col-lg-3 col-sm-6 col-xs-12">
                   <div className="form-group">
                     <label>Edzésvezető</label>
+                    {/* http://davidstutz.github.io/bootstrap-multiselect/#configuration-options-buttonTitle */}
+                    <Multiselect
+                      data={this.state.data.people}
+                      multiple
+                      maxHeight={200}
+                      nonSelectedText={function () {
+                        return 'Válassz edzésvezetőt!';
+                      }}
+                      onChange={this.handleLeadChange}
+                      />
                     <select name="lead" value={this.state.newTrainingData.lead} onChange={this.handleInputChange} multiple className="form-control">
                       <option value="Kesztyűs Gábor">Kesztyűs Gábor</option>
                       <option value="Kéri Dávid">Kéri Dávid</option>
