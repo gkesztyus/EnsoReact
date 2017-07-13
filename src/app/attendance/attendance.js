@@ -27,17 +27,14 @@ export class Attendance extends Component {
   }
 
   render() {
-    let newAttendanceSection;
-    if (this.state.newAttendanceVisible) {
-      newAttendanceSection = <NewAttendance onCancel={this.handleToggleNewAttendance}/>;
-    } else {
-      newAttendanceSection = <button className="btn btn-primary" type="button" onClick={this.handleToggleNewAttendance}>Edzés hozzáadása</button>;
-    }
-
     return (
       <div style={styles.attendance}>
-        hello attendance!!!:)
-        {newAttendanceSection}
+        <div className={this.state.newAttendanceVisible ? '' : 'hidden'}>
+          <NewAttendance onCancel={this.handleToggleNewAttendance}/>
+        </div>
+        <div className={this.state.newAttendanceVisible ? 'hidden' : ''}>
+          <button type="button" className="btn btn-primary" onClick={this.handleToggleNewAttendance}>Edzés hozzáadása</button>
+        </div>
       </div>
     );
   }

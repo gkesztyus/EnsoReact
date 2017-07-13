@@ -14,13 +14,17 @@ export class NewAttendance extends Component {
   constructor(props) {
     super(props);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleSave = this.handleSave.bind(this);
     this.state = {
 
     };
   }
   handleCancel() {
-    console.log('cancel!!!', this.props);
+    // console.log('cancel!!!', this.props);
     this.props.onCancel();
+  }
+  handleSave() {
+    console.log('save!!!', this);
   }
   render() {
     return (
@@ -68,7 +72,7 @@ export class NewAttendance extends Component {
                 </div>
                 <div className="col-xs-12">
                   <div className="btn-group" role="group">
-                    <button type="submit" className="btn btn-primary">Mentés</button>
+                    <button type="submit" className="btn btn-primary" onClick={this.handleSave}>Mentés</button>
                     <button type="button" className="btn btn-default" onClick={this.handleCancel}>Mégsem</button>
                   </div>
                 </div>
