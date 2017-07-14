@@ -3,7 +3,7 @@ import {Header} from './header';
 import {Title} from './title';
 import {Techs} from './techs/techs';
 import {Footer} from './footer';
-import {Attendance} from './attendance/attendance';
+import {Training} from './training/training';
 
 const styles = {
   container: {
@@ -23,7 +23,7 @@ export class Main extends Component {
     return (
       <div style={styles.container}>
         <Header/>
-        <Attendance/>
+        <Training/>
         <main style={styles.main}>
           <Title/>
           <Techs/>

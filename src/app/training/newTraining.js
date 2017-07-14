@@ -12,13 +12,13 @@ https://hacker0x01.github.io/react-datepicker/#example-5 */
 
 // a dátum mentését majd .toString-gel kellene megcsinálni és a szerkesztésnél figyelni rá hogy mifaszvan...
 const styles = {
-  attendance: {
+  training: {
     fontWeight: 'bold',
     textAlign: 'center'
   }
 };
 
-export class NewAttendance extends Component {
+export class NewTraining extends Component {
   constructor(props) {
     super(props);
     this.handleCancel = this.handleCancel.bind(this);
@@ -42,6 +42,8 @@ export class NewAttendance extends Component {
         ]
       }
     };
+
+    window.myState = this.state;
   }
   handleCancel() {
     // console.log('cancel!!!', this.props);
@@ -81,7 +83,7 @@ export class NewAttendance extends Component {
   }
   render() {
     return (
-      <div style={styles.attendance}>
+      <div style={styles.training}>
         <div className="panel panel-default">
           <div className="panel-heading">
               Új edzés felvétele
@@ -165,6 +167,6 @@ export class NewAttendance extends Component {
     );
   }
 }
-NewAttendance.propTypes = {
+NewTraining.propTypes = {
   onCancel: PropTypes.func
 };
