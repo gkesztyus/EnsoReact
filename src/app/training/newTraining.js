@@ -46,7 +46,6 @@ export class NewTraining extends Component {
     };
   }
   handleCancel() {
-    // console.log('cancel!!!', this.props);
     this.props.onCancel();
   }
   handleSave() {
@@ -110,7 +109,9 @@ export class NewTraining extends Component {
                 <div className="col-lg-3 col-sm-6 col-xs-12">
                   <div className="form-group">
                     <label>Edzésvezető</label>
-                    {/* http://davidstutz.github.io/bootstrap-multiselect/#configuration-options-buttonTitle */}
+                    {/* https://github.com/alsoscotland/react-super-select
+                        http://alsoscotland.github.io/react-super-select/react-super-select-examples.html#multiselect
+                        http://alsoscotland.github.io/react-super-select/annotated-source.html */}
                     <SuperSelect
                       dataSource={this.state.data.people}
                       placeholder="Válassz edzésvezetőt!"
