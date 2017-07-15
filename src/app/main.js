@@ -4,6 +4,7 @@ import {Title} from './title';
 import {Techs} from './techs/techs';
 import {Footer} from './footer';
 import {Training} from './training/training';
+import {People} from './people/people';
 
 const styles = {
   container: {
@@ -24,6 +25,7 @@ export class Main extends Component {
       <div style={styles.container}>
         <Header/>
         <Training/>
+        <People/>
         <main style={styles.main}>
           <Title/>
           <Techs/>

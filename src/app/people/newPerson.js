@@ -10,15 +10,15 @@ import 'react-super-select/lib/react-super-select.css';
 /* https://github.com/Hacker0x01/react-datepicker
 https://hacker0x01.github.io/react-datepicker/#example-5 */
 
-// a mentésnél majd figyelni kell rá hogy az edzésvezetőket belemergeljuk a rásztvevőkbe is..
+// a dátum mentését majd figyelni kell rá hogy az edzésvezetőket belemergeljuk a rásztvevőkbe is..
 const styles = {
-  training: {
+  person: {
     fontWeight: 'bold',
     textAlign: 'center'
   }
 };
 
-export class NewTraining extends Component {
+export class NewPerson extends Component {
   constructor(props) {
     super(props);
     this.handleCancel = this.handleCancel.bind(this);
@@ -28,7 +28,7 @@ export class NewTraining extends Component {
     this.handleLeadsChange = this.handleLeadsChange.bind(this);
     this.handleParticipantsChange = this.handleParticipantsChange.bind(this);
     this.state = {
-      newTrainingData: {
+      newPersonData: {
         date: moment(),
         leads: [],
         participants: [],
@@ -53,27 +53,27 @@ export class NewTraining extends Component {
   }
   handleThemeChange(e) {
     const newState = this.state;
-    newState.newTrainingData.theme = e.target.value;
+    newState.newPersonData.theme = e.target.value;
     this.setState(newState);
   }
   handleDateChange(e) {
     const newState = this.state;
-    newState.newTrainingData.date = e;
+    newState.newPersonData.date = e;
     this.setState(newState);
   }
   handleLeadsChange(e) {
     const newState = this.state;
-    newState.newTrainingData.leads = e;
+    newState.newPersonData.leads = e;
     this.setState(newState);
   }
   handleParticipantsChange(e) {
     const newState = this.state;
-    newState.newTrainingData.participants = e;
+    newState.newPersonData.participants = e;
     this.setState(newState);
   }
   render() {
     return (
-      <div style={styles.training}>
+      <div style={styles.person}>
         <div className="panel panel-default">
           <div>{JSON.stringify(this.state, undefined, 2)}</div>
           <div className="panel-heading">
@@ -88,7 +88,7 @@ export class NewTraining extends Component {
                     <div className="hidden-xs">
                       <DatePicker
                         onChange={this.handleDateChange}
-                        selected={this.state.newTrainingData.date}
+                        selected={this.state.newPersonData.date}
                         locale="hu-hu"
                         todayButton={'Mai napon'}
                         dateFormat="YYYY/MM/DD"
@@ -97,7 +97,7 @@ export class NewTraining extends Component {
                     <div className="hidden-sm hidden-md hidden-lg">
                       <DatePicker
                         onChange={this.handleDateChange}
-                        selected={this.state.newTrainingData.date}
+                        selected={this.state.newPersonData.date}
                         todayButton={'Mai napon'}
                         dateFormat="YYYY/MM/DD"
                         locale="hu-hu"
@@ -136,7 +136,7 @@ export class NewTraining extends Component {
                 <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Edzés témája</label>
-                    <textarea name="theme" value={this.state.newTrainingData.theme} onChange={this.handleThemeChange} className="form-control" rows="3"/>
+                    <textarea name="theme" value={this.state.newPersonData.theme} onChange={this.handleThemeChange} className="form-control" rows="3"/>
                   </div>
                 </div>
                 <div className="col-xs-12">
@@ -153,6 +153,6 @@ export class NewTraining extends Component {
     );
   }
 }
-NewTraining.propTypes = {
+NewPerson.propTypes = {
   onCancel: PropTypes.func
 };
