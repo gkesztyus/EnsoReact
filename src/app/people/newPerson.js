@@ -23,24 +23,24 @@ export class NewPerson extends Component {
     super(props);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSave = this.handleSave.bind(this);
-    this.handleThemeChange = this.handleThemeChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleLeadsChange = this.handleLeadsChange.bind(this);
-    this.handleParticipantsChange = this.handleParticipantsChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handlePhoneChange = this.handlePhoneChange.bind(this);
+    this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleCurrentRankChange = this.handleCurrentRankChange.bind(this);
     this.state = {
       newPersonData: {
-        date: moment(),
-        leads: [],
-        participants: [],
-        theme: ''
+        name: '',
+        birthDay: moment(),
+        phoneNumber: '',
+        email: '',
+        rankDates: [{'10kyu': ''}, {'9kyu': ''}, {'8kyu': ''}, {'7kyu': ''}, {'6kyu': ''}, {'5kyu': ''}, {'4kyu': ''}, {'3kyu': ''}, {'2kyu': ''}, {'1kyu': ''}, {'1dan': ''}, {'2dan': ''}, {'3dan': ''}, {'4dan': ''}, {'5dan': ''}, {'6dan': ''}, {'7dan': ''}, {'8dan': ''}, {'9dan': ''}, {'10dan': ''}, {'11dan': ''}, {'12dan': ''}, {'13dan': ''}, {'14dan': ''}, {'15dan': ''}],
+        currentRank: ''
       },
       data: {
-        people: [
-          {id: 1, value: 'Kesztyűs Gábor István', name: 'Kesztyűs Gábor'},
-          {id: 2, value: 'Kéri Dávid', name: 'Kéri Dávid'},
-          {id: 3, value: 'Hegyes Endre', name: 'Hegyes Endre'},
-          {id: 4, value: 'Bugris Valéria', name: 'Bugris Valéria'},
-          {id: 5, value: 'Fitzgerald Kirby', name: 'Angelina Pierce'}, {id: 6, value: 'Earline Terrell', name: 'Hopkins Sosa'}, {id: 7, value: 'Miranda Strickland', name: 'Sosa Blanchard'}, {id: 8, value: 'Evangeline Cole', name: 'Morin Patterson'}, {id: 9, value: 'Lawson Guthrie', name: 'Bernadine Macdonald'}, {id: 10, value: 'Bates Flowers', name: 'Scott Morrow'}, {id: 11, value: 'Lana Wooten', name: 'Nancy Blankenship'}, {id: 12, value: 'Rowena Schneider', name: 'Griffin Michael'}, {id: 13, value: 'Tiffany Knight', name: 'Clark Russo'}, {id: 14, value: 'Gross Daugherty', name: 'Hahn Coffey'}, {id: 15, value: 'Howell Chapman', name: 'Tami Silva'}, {id: 16, value: 'Melendez Melton', name: 'Fran Ratliff'}, {id: 17, value: 'Ashley Christensen', name: 'Araceli Sullivan'}, {id: 18, value: 'Pierce Fry', name: 'Aurora Curtis'}, {id: 19, value: 'Hyde Gardner', name: 'Wilkinson Oneil'}
+        availableRanks:
+        [
+          {id: 0, value: '10kyu', name: '10 kyu'}, {id: 1, value: '9kyu', name: '9 kyu'}, {id: 2, value: '8kyu', name: '8 kyu'}, {id: 3, value: '7kyu', name: '7 kyu'}, {id: 4, value: '6kyu', name: '6 kyu'}, {id: 5, value: '5kyu', name: '5 kyu'}, {id: 6, value: '4kyu', name: '4 kyu'}, {id: 7, value: '3kyu', name: '3 kyu'}, {id: 8, value: '2kyu', name: '2 kyu'}, {id: 9, value: '1kyu', name: '1 kyu'}, {id: 10, value: '1dan', name: '1 dan'}, {id: 11, value: '2dan', name: '2 dan'}, {id: 12, value: '3dan', name: '3 dan'}, {id: 13, value: '4dan', name: '4 dan'}, {id: 14, value: '5dan', name: '5 dan'}, {id: 15, value: '6dan', name: '6 dan'}, {id: 16, value: '7dan', name: '7 dan'}, {id: 17, value: '8dan', name: '8 dan'}, {id: 18, value: '9dan', name: '9 dan'}, {id: 19, value: '10dan', name: '10 dan'}, {id: 20, value: '11dan', name: '11 dan'}, {id: 21, value: '12dan', name: '12 dan'}, {id: 22, value: '13dan', name: '13 dan'}, {id: 23, value: '14dan', name: '14 dan'}, {id: 24, value: '15dan', name: '15 dan'}
         ]
       }
     };
@@ -51,24 +51,29 @@ export class NewPerson extends Component {
   handleSave() {
     console.log('save!!!', this);
   }
-  handleThemeChange(e) {
+  handleNameChange(e) {
     const newState = this.state;
-    newState.newPersonData.theme = e.target.value;
+    newState.newPersonData.name = e.target.value;
     this.setState(newState);
   }
-  handleDateChange(e) {
+  handleEmailChange(e) {
     const newState = this.state;
-    newState.newPersonData.date = e;
+    newState.newPersonData.email = e.target.value;
     this.setState(newState);
   }
-  handleLeadsChange(e) {
+  handlePhoneChange(e) {
     const newState = this.state;
-    newState.newPersonData.leads = e;
+    newState.newPersonData.phoneNumber = e.target.value;
     this.setState(newState);
   }
-  handleParticipantsChange(e) {
+  handleBirthDayChange(e) {
     const newState = this.state;
-    newState.newPersonData.participants = e;
+    newState.newPersonData.birthDay = e;
+    this.setState(newState);
+  }
+  handleCurrentRankChange(e) {
+    const newState = this.state;
+    newState.newPersonData.currentRank = e;
     this.setState(newState);
   }
   render() {
@@ -82,13 +87,19 @@ export class NewPerson extends Component {
           <div className="panel-body">
             <form role="form">
               <div className="row">
+                <div className="col-lg-4 col-xs-12">
+                  <div className="form-group">
+                    <label>Név</label>
+                    <input name="name" value={this.state.newPersonData.name} onChange={this.handleNameChange} className="form-control"/>
+                  </div>
+                </div>
                 <div className="col-lg-2 col-xs-12">
                   <div className="form-group">
-                    <label>Edzés időpontja</label>
+                    <label>Születési dátum</label>
                     <div className="hidden-xs">
                       <DatePicker
-                        onChange={this.handleDateChange}
-                        selected={this.state.newPersonData.date}
+                        onChange={this.handleBirthDayChange}
+                        selected={this.state.newPersonData.birthDay}
                         locale="hu-hu"
                         todayButton={'Mai napon'}
                         dateFormat="YYYY/MM/DD"
@@ -96,8 +107,8 @@ export class NewPerson extends Component {
                     </div>
                     <div className="hidden-sm hidden-md hidden-lg">
                       <DatePicker
-                        onChange={this.handleDateChange}
-                        selected={this.state.newPersonData.date}
+                        onChange={this.handleBirthDayChange}
+                        selected={this.state.newPersonData.birthDay}
                         todayButton={'Mai napon'}
                         dateFormat="YYYY/MM/DD"
                         locale="hu-hu"
@@ -106,37 +117,74 @@ export class NewPerson extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-sm-6 col-xs-12">
+                <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
-                    <label>Edzésvezető</label>
-                    {/* https://github.com/alsoscotland/react-super-select
-                        http://alsoscotland.github.io/react-super-select/react-super-select-examples.html#multiselect
-                        http://alsoscotland.github.io/react-super-select/annotated-source.html */}
-                    <SuperSelect
-                      dataSource={this.state.data.people}
-                      placeholder="Válassz edzésvezetőt!"
-                      onChange={this.handleLeadsChange}
-                      multiple
-                      keepOpenOnSelection
-                      />
+                    <label>Telefonszám</label>
+                    <input type="tel" name="phoneNumber" value={this.state.newPersonData.phoneNumber} onChange={this.handlePhoneChange} className="form-control"/>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-xs-12">
+                  <div className="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" value={this.state.newPersonData.email} onChange={this.handleEmailChange} className="form-control"/>
                   </div>
                 </div>
                 <div className="col-lg-3 col-sm-6 col-xs-12">
                   <div className="form-group">
-                    <label>Résztvevők</label>
+                    <label>Aktuális fokozat</label>
+                    {/* https://github.com/alsoscotland/react-super-select
+                        http://alsoscotland.github.io/react-super-select/react-super-select-examples.html#multiselect
+                        http://alsoscotland.github.io/react-super-select/annotated-source.html */}
                     <SuperSelect
-                      dataSource={this.state.data.people}
-                      placeholder="Válassz résztvevőket!"
-                      onChange={this.handleParticipantsChange}
-                      multiple
-                      keepOpenOnSelection
+                      dataSource={this.state.data.availableRanks}
+                      placeholder="Válassz aktuális fokozatot!"
+                      onChange={this.handleCurrentRankChange}
                       />
                   </div>
                 </div>
                 <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
-                    <label>Edzés témája</label>
-                    <textarea name="theme" value={this.state.newPersonData.theme} onChange={this.handleThemeChange} className="form-control" rows="3"/>
+                    <label>Fokozat történet</label>
+                    <div className="table-responsive">
+                      <table className="table">
+                        <tbody>
+                          {this.state.data.availableRanks.map((item, index) => (
+                            <tr key={index}>
+                              <td>
+                                <input
+                                  name="item.value"
+                                  type="checkbox"
+                                  checked={Boolean(this.state.newPersonData.rankDates[item.name])}
+                                  onChange={this.handleRankDateChange}
+                                  />
+                              </td>
+                              <td>{item.name}</td>
+                              <td>
+                                <div className="hidden-xs">
+                                  <DatePicker
+                                    onChange={this.handleBirthDayChange}
+                                    selected={this.state.newPersonData.birthDay}
+                                    locale="hu-hu"
+                                    todayButton={'Mai napon'}
+                                    dateFormat="YYYY/MM/DD"
+                                    />
+                                </div>
+                                <div className="hidden-sm hidden-md hidden-lg">
+                                  <DatePicker
+                                    onChange={this.handleBirthDayChange}
+                                    selected={this.state.newPersonData.birthDay}
+                                    todayButton={'Mai napon'}
+                                    dateFormat="YYYY/MM/DD"
+                                    locale="hu-hu"
+                                    withPortal
+                                    />
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
                 <div className="col-xs-12">
