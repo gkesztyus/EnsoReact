@@ -28,6 +28,9 @@ export class NewPerson extends Component {
     this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleCurrentRankChange = this.handleCurrentRankChange.bind(this);
+    this.handleRankDateChange = this.handleRankDateChange.bind(this);
+    this.handleRankHistoryChange = this.handleRankHistoryChange.bind(this);
+
     this.state = {
       newPersonData: {
         name: '',
@@ -76,6 +79,20 @@ export class NewPerson extends Component {
     newState.newPersonData.currentRank = e;
     this.setState(newState);
   }
+  // todo
+  handleRankDateChange(e) {
+    const newState = this.state;
+    newState.newPersonData.currentRank = e;
+    this.setState(newState);
+  }
+  handleRankHistoryChange(e, asd) {
+    console.log(e, asd);
+    const newState = this.state;
+    // this.state.newPersonData.rankDates[item.value]
+    newState.newPersonData.rankDates = e;
+    // this.setState(newState);
+  }
+
   render() {
     return (
       <div style={styles.person}>
@@ -162,8 +179,8 @@ export class NewPerson extends Component {
                               <td>
                                 <div className="hidden-xs">
                                   <DatePicker
-                                    onChange={this.handleBirthDayChange}
-                                    selected={this.state.newPersonData.birthDay}
+                                    onChange={() => this.handleRankHistoryChange(item.value)}
+                                    selected={this.state.newPersonData.rankDates[item.value]}
                                     locale="hu-hu"
                                     todayButton={'Mai napon'}
                                     dateFormat="YYYY/MM/DD"
@@ -171,8 +188,8 @@ export class NewPerson extends Component {
                                 </div>
                                 <div className="hidden-sm hidden-md hidden-lg">
                                   <DatePicker
-                                    onChange={this.handleBirthDayChange}
-                                    selected={this.state.newPersonData.birthDay}
+                                    onChange={() => this.handleRankHistoryChange(item.value)}
+                                    selected={this.state.newPersonData.rankDates[item.value]}
                                     todayButton={'Mai napon'}
                                     dateFormat="YYYY/MM/DD"
                                     locale="hu-hu"
