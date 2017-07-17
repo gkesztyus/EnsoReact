@@ -47,6 +47,17 @@ export class NewPerson extends Component {
         ]
       }
     };
+
+    this.handleRankHistoryDateChange = {};
+    this.state.data.availableRanks.forEach(rank => {
+      this.handleRankHistoryDateChange[rank.value] = this.onChange.bind(this, rank.value);
+    });
+    console.log('this', this);
+  }
+  onChange(fieldName, date) {
+    const newState = this.state;
+    newState.newPersonData.rankDates[fieldName] = date;
+    this.setState(newState);
   }
   handleCancel() {
     this.props.onCancel();
@@ -84,13 +95,6 @@ export class NewPerson extends Component {
     const newState = this.state;
     newState.newPersonData.currentRank = e;
     this.setState(newState);
-  }
-  handleRankHistoryChange(e, asd) {
-    console.log(e, asd);
-    const newState = this.state;
-    // this.state.newPersonData.rankDates[item.value]
-    newState.newPersonData.rankDates = e;
-    // this.setState(newState);
   }
 
   render() {
@@ -179,7 +183,7 @@ export class NewPerson extends Component {
                               <td>
                                 <div className="hidden-xs">
                                   <DatePicker
-                                    onChange={() => this.handleRankHistoryChange(item.value)}
+                                    onChange={this.handleRankHistoryDateChange[item.value]}
                                     selected={this.state.newPersonData.rankDates[item.value]}
                                     locale="hu-hu"
                                     todayButton={'Mai napon'}
@@ -188,7 +192,7 @@ export class NewPerson extends Component {
                                 </div>
                                 <div className="hidden-sm hidden-md hidden-lg">
                                   <DatePicker
-                                    onChange={() => this.handleRankHistoryChange(item.value)}
+                                    onChange={this.handleRankHistoryDateChange[item.value]}
                                     selected={this.state.newPersonData.rankDates[item.value]}
                                     todayButton={'Mai napon'}
                                     dateFormat="YYYY/MM/DD"
