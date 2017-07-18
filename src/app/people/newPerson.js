@@ -9,7 +9,6 @@ import 'react-super-select/lib/react-super-select.css';
 /* https://github.com/Hacker0x01/react-datepicker
 https://hacker0x01.github.io/react-datepicker/#example-5 */
 
-// a dátum mentését majd figyelni kell rá hogy az edzésvezetőket belemergeljuk a rásztvevőkbe is..
 const styles = {
   person: {
     fontWeight: 'bold',
@@ -34,10 +33,8 @@ export class NewPerson extends Component {
     super(props);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSave = this.handleSave.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
 
     this.state = {
       newPersonData: {
@@ -76,19 +73,9 @@ export class NewPerson extends Component {
     this.setState(newState);
     e.preventDefault();
   }
-  handleNameChange(e) {
+  handleSimpleInputChange(e) {
     const newState = this.state;
-    newState.newPersonData.name = e.target.value;
-    this.setState(newState);
-  }
-  handleEmailChange(e) {
-    const newState = this.state;
-    newState.newPersonData.email = e.target.value;
-    this.setState(newState);
-  }
-  handlePhoneChange(e) {
-    const newState = this.state;
-    newState.newPersonData.phoneNumber = e.target.value;
+    newState.newPersonData[e.target.name] = e.target.value;
     this.setState(newState);
   }
   handleBirthDayChange(e) {
@@ -117,7 +104,7 @@ export class NewPerson extends Component {
                 <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Név</label>
-                    <input name="name" value={this.state.newPersonData.name} onChange={this.handleNameChange} className="form-control"/>
+                    <input name="name" value={this.state.newPersonData.name} onChange={this.handleSimpleInputChange} className="form-control"/>
                   </div>
                 </div>
                 <div className="col-lg-4 col-xs-12">
@@ -147,13 +134,13 @@ export class NewPerson extends Component {
                 <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Telefonszám</label>
-                    <input type="tel" name="phoneNumber" value={this.state.newPersonData.phoneNumber} onChange={this.handlePhoneChange} className="form-control"/>
+                    <input type="tel" name="phoneNumber" value={this.state.newPersonData.phoneNumber} onChange={this.handleSimpleInputChange} className="form-control"/>
                   </div>
                 </div>
                 <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" value={this.state.newPersonData.email} onChange={this.handleEmailChange} className="form-control"/>
+                    <input type="email" name="email" value={this.state.newPersonData.email} onChange={this.handleSimpleInputChange} className="form-control"/>
                   </div>
                 </div>
                 <div className="col-lg-4 col-xs-12">
