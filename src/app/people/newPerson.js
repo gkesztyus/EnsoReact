@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
-import SuperSelect from 'react-super-select';
 import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,6 +14,18 @@ const styles = {
   person: {
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  deleteButton: {
+    padding: '2px 10px'
+  },
+  rankHistoryBox: {
+    overflowY: 'scroll',
+    height: '400px',
+    display: 'block'
+  },
+  tableBody: {
+    display: 'table',
+    width: '100%'
   }
 };
 
@@ -27,9 +38,6 @@ export class NewPerson extends Component {
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleCurrentRankChange = this.handleCurrentRankChange.bind(this);
-    this.handleRankDateChange = this.handleRankDateChange.bind(this);
-    this.handleRankHistoryChange = this.handleRankHistoryChange.bind(this);
 
     this.state = {
       newPersonData: {
@@ -37,8 +45,7 @@ export class NewPerson extends Component {
         birthDay: moment(),
         phoneNumber: '',
         email: '',
-        rankDates: [{'10kyu': ''}, {'9kyu': ''}, {'8kyu': ''}, {'7kyu': ''}, {'6kyu': ''}, {'5kyu': ''}, {'4kyu': ''}, {'3kyu': ''}, {'2kyu': ''}, {'1kyu': ''}, {'1dan': ''}, {'2dan': ''}, {'3dan': ''}, {'4dan': ''}, {'5dan': ''}, {'6dan': ''}, {'7dan': ''}, {'8dan': ''}, {'9dan': ''}, {'10dan': ''}, {'11dan': ''}, {'12dan': ''}, {'13dan': ''}, {'14dan': ''}, {'15dan': ''}],
-        currentRank: ''
+        rankDates: [{'10kyu': ''}, {'9kyu': ''}, {'8kyu': ''}, {'7kyu': ''}, {'6kyu': ''}, {'5kyu': ''}, {'4kyu': ''}, {'3kyu': ''}, {'2kyu': ''}, {'1kyu': ''}, {'1dan': ''}, {'2dan': ''}, {'3dan': ''}, {'4dan': ''}, {'5dan': ''}, {'6dan': ''}, {'7dan': ''}, {'8dan': ''}, {'9dan': ''}, {'10dan': ''}, {'11dan': ''}, {'12dan': ''}, {'13dan': ''}, {'14dan': ''}, {'15dan': ''}]
       },
       data: {
         availableRanks:
@@ -50,20 +57,24 @@ export class NewPerson extends Component {
 
     this.handleRankHistoryDateChange = {};
     this.state.data.availableRanks.forEach(rank => {
-      this.handleRankHistoryDateChange[rank.value] = this.onChange.bind(this, rank.value);
+      this.handleRankHistoryDateChange[rank.value] = this.onRankHistoryDateChange.bind(this, rank.value);
     });
-    console.log('this', this);
+
+    this.handleRankDelete = {};
+    this.state.data.availableRanks.forEach(rank => {
+      this.handleRankDelete[rank.value] = this.onRankDelete.bind(this, rank.value);
+    });
   }
-  onChange(fieldName, date) {
+  onRankHistoryDateChange(fieldName, date) {
     const newState = this.state;
     newState.newPersonData.rankDates[fieldName] = date;
     this.setState(newState);
   }
-  handleCancel() {
-    this.props.onCancel();
-  }
-  handleSave() {
-    console.log('save!!!', this);
+  onRankDelete(fieldName, e) {
+    const newState = this.state;
+    newState.newPersonData.rankDates[fieldName] = '';
+    this.setState(newState);
+    e.preventDefault();
   }
   handleNameChange(e) {
     const newState = this.state;
@@ -85,16 +96,11 @@ export class NewPerson extends Component {
     newState.newPersonData.birthDay = e;
     this.setState(newState);
   }
-  handleCurrentRankChange(e) {
-    const newState = this.state;
-    newState.newPersonData.currentRank = e;
-    this.setState(newState);
+  handleCancel() {
+    this.props.onCancel();
   }
-  // todo
-  handleRankDateChange(e) {
-    const newState = this.state;
-    newState.newPersonData.currentRank = e;
-    this.setState(newState);
+  handleSave() {
+    console.log('save!!!', this);
   }
 
   render() {
@@ -114,7 +120,7 @@ export class NewPerson extends Component {
                     <input name="name" value={this.state.newPersonData.name} onChange={this.handleNameChange} className="form-control"/>
                   </div>
                 </div>
-                <div className="col-lg-2 col-xs-12">
+                <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Születési dátum</label>
                     <div className="hidden-xs">
@@ -150,47 +156,17 @@ export class NewPerson extends Component {
                     <input type="email" name="email" value={this.state.newPersonData.email} onChange={this.handleEmailChange} className="form-control"/>
                   </div>
                 </div>
-                <div className="col-lg-3 col-sm-6 col-xs-12">
-                  <div className="form-group">
-                    <label>Aktuális fokozat</label>
-                    {/* https://github.com/alsoscotland/react-super-select
-                        http://alsoscotland.github.io/react-super-select/react-super-select-examples.html#multiselect
-                        http://alsoscotland.github.io/react-super-select/annotated-source.html */}
-                    <SuperSelect
-                      dataSource={this.state.data.availableRanks}
-                      placeholder="Válassz aktuális fokozatot!"
-                      onChange={this.handleCurrentRankChange}
-                      />
-                  </div>
-                </div>
                 <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
                     <label>Fokozat történet</label>
                     <div className="table-responsive">
-                      <table className="table">
-                        <tbody>
+                      <table className="table table-striped" style={styles.rankHistoryBox}>
+                        <tbody style={styles.tableBody}>
                           {this.state.data.availableRanks.map((item, index) => (
                             <tr key={index}>
-                              <td>
-                                <input
-                                  name="item.value"
-                                  type="checkbox"
-                                  checked={Boolean(this.state.newPersonData.rankDates[item.name])}
-                                  onChange={this.handleRankDateChange}
-                                  />
-                              </td>
                               <td>{item.name}</td>
                               <td>
-                                <div className="hidden-xs">
-                                  <DatePicker
-                                    onChange={this.handleRankHistoryDateChange[item.value]}
-                                    selected={this.state.newPersonData.rankDates[item.value]}
-                                    locale="hu-hu"
-                                    todayButton={'Mai napon'}
-                                    dateFormat="YYYY/MM/DD"
-                                    />
-                                </div>
-                                <div className="hidden-sm hidden-md hidden-lg">
+                                <div className="pull-left">
                                   <DatePicker
                                     onChange={this.handleRankHistoryDateChange[item.value]}
                                     selected={this.state.newPersonData.rankDates[item.value]}
@@ -200,6 +176,9 @@ export class NewPerson extends Component {
                                     withPortal
                                     />
                                 </div>
+                                <button style={styles.deleteButton} onClick={this.handleRankDelete[item.value]} className={'pull-left btn btn-link ' + (this.state.newPersonData.rankDates[item.value] ? 'show' : 'hidden')}>
+                                  <span className="glyphicon glyphicon-remove"/>
+                                </button>
                               </td>
                             </tr>
                           ))}
