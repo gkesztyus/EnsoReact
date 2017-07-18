@@ -45,7 +45,7 @@ export class NewPerson extends Component {
         birthDay: moment(),
         phoneNumber: '',
         email: '',
-        rankDates: [{'10kyu': ''}, {'9kyu': ''}, {'8kyu': ''}, {'7kyu': ''}, {'6kyu': ''}, {'5kyu': ''}, {'4kyu': ''}, {'3kyu': ''}, {'2kyu': ''}, {'1kyu': ''}, {'1dan': ''}, {'2dan': ''}, {'3dan': ''}, {'4dan': ''}, {'5dan': ''}, {'6dan': ''}, {'7dan': ''}, {'8dan': ''}, {'9dan': ''}, {'10dan': ''}, {'11dan': ''}, {'12dan': ''}, {'13dan': ''}, {'14dan': ''}, {'15dan': ''}]
+        rankDates: {'10kyu': '', '9kyu': '', '8kyu': '', '7kyu': '', '6kyu': '', '5kyu': '', '4kyu': '', '3kyu': '', '2kyu': '', '1kyu': '', '1dan': '', '2dan': '', '3dan': '', '4dan': '', '5dan': '', '6dan': '', '7dan': '', '8dan': '', '9dan': '', '10dan': '', '11dan': '', '12dan': '', '13dan': '', '14dan': '', '15dan': ''}
       },
       data: {
         availableRanks:
@@ -100,7 +100,7 @@ export class NewPerson extends Component {
     this.props.onCancel();
   }
   handleSave() {
-    console.log('save!!!', this);
+    console.log('save!!!', this.state);
   }
 
   render() {
@@ -109,7 +109,7 @@ export class NewPerson extends Component {
         <div className="panel panel-default">
           <div>{JSON.stringify(this.state, undefined, 2)}</div>
           <div className="panel-heading">
-              Új edzés felvétele
+              Új tanuló felvétele
           </div>
           <div className="panel-body">
             <form role="form">
