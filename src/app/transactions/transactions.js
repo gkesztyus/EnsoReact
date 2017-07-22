@@ -30,35 +30,43 @@ export class Transactions extends Component {
           <button className="btn btn-primary" onClick={this.handleToggleNewTransactionVisibility}>Új tranzakció rögzítése</button>
         </div>
         <div className={this.state.isNewTransactionVisible ? 'visible' : 'hidden'}>
-          <form>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  onClick={this.handleTransactionTypeChange}
-                  checked={this.state.transactionType === 'income'}
-                  value="income"
-                  />
-                Bevétel
-              </label>
+          <div className="panel panel-default">
+            <div>{JSON.stringify(this.state, undefined, 2)}</div>
+            <div className="panel-heading">
+                Új tranzakció rögzítése
             </div>
-            <div className="radio">
-              <label>
-                <input
-                  type="radio"
-                  onClick={this.handleTransactionTypeChange}
-                  checked={this.state.transactionType === 'expense'}
-                  value="expense"
-                  />
-                Kiadás
-              </label>
+            <div className="panel-body">
+              <form>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      onClick={this.handleTransactionTypeChange}
+                      checked={this.state.transactionType === 'income'}
+                      value="income"
+                      />
+                    Bevétel
+                  </label>
+                </div>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      onClick={this.handleTransactionTypeChange}
+                      checked={this.state.transactionType === 'expense'}
+                      value="expense"
+                      />
+                    Kiadás
+                  </label>
+                </div>
+              </form>
+              <div className={this.state.transactionType === 'expense' ? 'visible' : 'hidden'}>
+                expense
+              </div>
+              <div className={this.state.transactionType === 'income' ? 'visible' : 'hidden'}>
+                <IncomeForm/>
+              </div>
             </div>
-          </form>
-          <div className={this.state.transactionType === 'expense' ? 'visible' : 'hidden'}>
-            expense
-          </div>
-          <div className={this.state.transactionType === 'income' ? 'visible' : 'hidden'}>
-            <IncomeForm/>
           </div>
         </div>
       </div>
