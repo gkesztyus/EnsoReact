@@ -8,15 +8,17 @@ export class IncomeForm extends Component {
     super(props);
     this.state = {
       incomeTypes: [
-          {id: 0, name: 'Havi bérlet', value: 'membership'},
-          {id: 1, name: 'Fél havi bérlet', value: 'halfMonth'},
-          {id: 2, name: 'Alkalmi', value: 'occasionaly'},
-          {id: 3, name: 'Egyéb', value: 'other'}
+          {id: 0, name: 'Havi bérlet', value: 'membership', price: 7000},
+          {id: 1, name: 'Fél havi bérlet', value: 'halfMonth', price: 4900},
+          {id: 2, name: 'Alkalmi', value: 'occasionaly', price: 1500},
+          {id: 3, name: 'Egyéb', value: 'other', price: ''}
       ],
+      uniquePriceEnterAllowed: false,
       newIncome: {
         transactionDate: moment(),
         incomeType: '',
-        uniqueIncomeType: ''
+        uniqueIncomeType: '',
+        incomePrice: ''
       }
     };
     this.handleIncomeTypeChange = this.handleIncomeTypeChange.bind(this);
@@ -26,8 +28,12 @@ export class IncomeForm extends Component {
   handleIncomeTypeChange(e) {
     const newState = this.state;
     newState.newIncome.incomeType = e;
-    if (e.value !== 'other') {
+    if (e.value === 'other') {
+      newState.uniquePriceEnterAllowed = false;
+    } else {
+      newState.uniquePriceEnterAllowed = true;
       newState.newIncome.uniqueIncomeType = '';
+      newState.newIncome.incomePrice = e.price;
     }
     this.setState(newState);
   }
@@ -75,6 +81,23 @@ export class IncomeForm extends Component {
             <div className="form-group">
               <label>Befizetés megnevezése</label>
               <input name="uniqueIncomeType" value={this.state.newIncome.uniqueIncomeType} onChange={this.handleSimpleInputChange} className="form-control"/>
+            </div>
+          </div>
+          <div className="col-lg-4 col-xs-12">
+            <div className="form-group">
+              <label>Befizetés összege</label>
+              <div className="input-group">
+                <input
+                  type="number"
+                  name="incomePrice"
+                  value={this.state.newIncome.incomePrice}
+                  onChange={this.handleSimpleInputChange}
+                  disabled={this.state.uniquePriceEnterAllowed}
+                  className="form-control"
+                  style={{zIndex: 0}}
+                  />
+                <div className="input-group-addon">Ft</div>
+              </div>
             </div>
           </div>
           {/* <div className="col-lg-4 col-xs-12">
