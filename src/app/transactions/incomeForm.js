@@ -1,40 +1,58 @@
 import React, {Component} from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import SuperSelect from 'react-super-select';
 
 export class IncomeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      incomeType: '',
-      newTransaction: {
-        transactionDate: moment()
+      incomeTypes: [
+          {id: 0, name: 'Havi bérlet', value: 'membership'},
+          {id: 1, name: 'Fél havi bérlet', value: 'halfMonth'},
+          {id: 2, name: 'Alkalmi', value: 'occasionaly'},
+          {id: 3, name: 'Egyéb', value: 'other'}
+      ],
+      newIncome: {
+        transactionDate: moment(),
+        incomeType: '',
+        uniqueIncomeType: ''
       }
     };
     this.handleIncomeTypeChange = this.handleIncomeTypeChange.bind(this);
-    this.handleTransactionDateChange = this.handleTransactionDateChange.bind(this);
+    this.handleIncomeDateChange = this.handleIncomeDateChange.bind(this);
+    this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
   }
   handleIncomeTypeChange(e) {
-    this.setState({
-      incomeType: e.target.value
-    });
-  }
-  handleTransactionDateChange(e) {
     const newState = this.state;
-    newState.newTransaction.transactionDate = e;
+    newState.newIncome.incomeType = e;
+    if (e.value !== 'other') {
+      newState.newIncome.uniqueIncomeType = '';
+    }
+    this.setState(newState);
+  }
+  handleIncomeDateChange(e) {
+    const newState = this.state;
+    newState.newIncome.transactionDate = e;
+    this.setState(newState);
+  }
+  handleSimpleInputChange(e) {
+    const newState = this.state;
+    newState.newIncome[e.target.name] = e.target.value;
     this.setState(newState);
   }
 
   render() {
     return (
       <form role="form">
+        <code>{JSON.stringify(this.state, undefined, 2)}</code>
         <div className="row">
           <div className="col-lg-4 col-xs-12">
             <div className="form-group">
-              <label>Kifizetés dátuma</label>
+              <label>Befizetés dátuma</label>
               <DatePicker
                 onChange={this.handleTransactionDateChange}
-                selected={this.state.newTransaction.transactionDate}
+                selected={this.state.newIncome.transactionDate}
                 locale="hu-hu"
                 todayButton={'Mai napon'}
                 dateFormat="YYYY/MM/DD"
@@ -44,28 +62,19 @@ export class IncomeForm extends Component {
           </div>
           <div className="col-lg-4 col-xs-12">
             <div className="form-group">
-              <div className="radio">
-                <label>
-                  <input
-                    type="radio"
-                    onClick={this.handleIncomeTypeChange}
-                    checked={this.state.incomeType === 'membership'}
-                    value="membership"
-                    />
-                  Edzésdíj
-                </label>
-              </div>
-              <div className="radio">
-                <label>
-                  <input
-                    type="radio"
-                    onClick={this.handleIncomeTypeChange}
-                    checked={this.state.incomeType === 'other'}
-                    value="other"
-                    />
-                  Egyéb
-                </label>
-              </div>
+              <label>Befizetés típusa</label>
+              <SuperSelect
+                dataSource={this.state.incomeTypes}
+                placeholder="Válassz bevétel típust!"
+                onChange={this.handleIncomeTypeChange}
+                clearable={false}
+                />
+            </div>
+          </div>
+          <div className={'col-lg-4 col-xs-12 ' + (this.state.newIncome.incomeType.value === 'other' ? 'visible' : 'hidden')}>
+            <div className="form-group">
+              <label>Befizetés megnevezése</label>
+              <input name="uniqueIncomeType" value={this.state.newIncome.uniqueIncomeType} onChange={this.handleSimpleInputChange} className="form-control"/>
             </div>
           </div>
           {/* <div className="col-lg-4 col-xs-12">

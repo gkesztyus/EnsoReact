@@ -1,5 +1,7 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import {IncomeForm} from './incomeForm';
+import {Nav, NavItem} from 'react-bootstrap';
 // import ExpenseForm from './expenseForm';
 
 export class Transactions extends Component {
@@ -7,7 +9,7 @@ export class Transactions extends Component {
     super(props);
     this.state = {
       isNewTransactionVisible: false,
-      transactionType: ''
+      transactionType: 'income'
     };
     this.handleToggleNewTransactionVisibility = this.handleToggleNewTransactionVisibility.bind(this);
     this.handleTransactionTypeChange = this.handleTransactionTypeChange.bind(this);
@@ -17,10 +19,12 @@ export class Transactions extends Component {
       isNewTransactionVisible: true
     });
   }
-  handleTransactionTypeChange(e) {
+  handleTransactionTypeChange(eventKey, event) {
+    event.preventDefault();
     this.setState({
-      transactionType: e.target.value
+      transactionType: eventKey
     });
+    console.log(`selected ${eventKey}`);
   }
 
   render() {
@@ -36,30 +40,10 @@ export class Transactions extends Component {
                 Új tranzakció rögzítése
             </div>
             <div className="panel-body">
-              <form>
-                <div className="radio">
-                  <label>
-                    <input
-                      type="radio"
-                      onClick={this.handleTransactionTypeChange}
-                      checked={this.state.transactionType === 'income'}
-                      value="income"
-                      />
-                    Bevétel
-                  </label>
-                </div>
-                <div className="radio">
-                  <label>
-                    <input
-                      type="radio"
-                      onClick={this.handleTransactionTypeChange}
-                      checked={this.state.transactionType === 'expense'}
-                      value="expense"
-                      />
-                    Kiadás
-                  </label>
-                </div>
-              </form>
+              <Nav bsStyle="tabs" activeKey="this.state.transactionType? handleTransactionTypeChange: 'income'" onSelect={this.handleTransactionTypeChange}>
+                <NavItem className={this.state.transactionType==='income' ? 'active' : ''} eventKey="income" href="/home">Bevétel</NavItem>
+                <NavItem className={this.state.transactionType==='expense' ? 'active' : ''} eventKey="expense">Kiadás</NavItem>
+              </Nav>
               <div className={this.state.transactionType === 'expense' ? 'visible' : 'hidden'}>
                 expense
               </div>
