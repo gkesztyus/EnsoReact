@@ -75,7 +75,7 @@ export class NewTraining extends Component {
     return (
       <div style={styles.training}>
         <div className="panel panel-default">
-          <div>{JSON.stringify(this.state, undefined, 2)}</div>
+          <code>{JSON.stringify(this.state, undefined, 2)}</code>
           <div className="panel-heading">
               Új edzés felvétele
           </div>

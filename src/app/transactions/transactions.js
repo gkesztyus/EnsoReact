@@ -35,7 +35,7 @@ export class Transactions extends Component {
         </div>
         <div className={this.state.isNewTransactionVisible ? 'visible' : 'hidden'}>
           <div className="panel panel-default">
-            <div>{JSON.stringify(this.state, undefined, 2)}</div>
+            <code>{JSON.stringify(this.state, undefined, 2)}</code>
             <div className="panel-heading">
                 Új tranzakció rögzítése
             </div>
