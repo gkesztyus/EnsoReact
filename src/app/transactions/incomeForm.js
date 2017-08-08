@@ -7,23 +7,37 @@ export class IncomeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      incomeTypes: [
+      data: {
+        admins: [
+          {id: 1, value: 'Kesztyűs Gábor István', name: 'Kesztyűs Gábor'},
+          {id: 2, value: 'Kéri Dávid', name: 'Kéri Dávid'},
+          {id: 3, value: 'Hegyes Endre', name: 'Hegyes Endre'}
+        ],
+        incomeTypes: [
           {id: 0, name: 'Havi bérlet', value: 'membership', price: 7000},
           {id: 1, name: 'Fél havi bérlet', value: 'halfMonth', price: 4900},
           {id: 2, name: 'Alkalmi', value: 'occasionaly', price: 1500},
           {id: 3, name: 'Egyéb', value: 'other', price: ''}
-      ],
-      uniquePriceEnterAllowed: false,
+        ],
+        incomeStaus: [
+          {id: 0, name: 'Kézben', value: 'inHand'},
+          {id: 1, name: 'Kasszában', value: 'inSafe'}
+        ]
+      },
+      uniquePriceEnterAllowed: 'false',
       newIncome: {
         transactionDate: moment(),
         incomeType: '',
         uniqueIncomeType: '',
-        incomePrice: ''
+        incomePrice: '',
+        admin: ''
       }
     };
     this.handleIncomeTypeChange = this.handleIncomeTypeChange.bind(this);
     this.handleIncomeDateChange = this.handleIncomeDateChange.bind(this);
     this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
+    this.handleAdminChange = this.handleAdminChange.bind(this);
+    this.handleIncomeStateChange = this.handleIncomeStateChange.bind(this);
   }
   handleIncomeTypeChange(e) {
     const newState = this.state;
@@ -37,6 +51,11 @@ export class IncomeForm extends Component {
     }
     this.setState(newState);
   }
+  handleAdminChange(e) {
+    const newState = this.state;
+    newState.newIncome.admin = e;
+    this.setState(newState);
+  }
   handleIncomeDateChange(e) {
     const newState = this.state;
     newState.newIncome.transactionDate = e;
@@ -45,6 +64,11 @@ export class IncomeForm extends Component {
   handleSimpleInputChange(e) {
     const newState = this.state;
     newState.newIncome[e.target.name] = e.target.value;
+    this.setState(newState);
+  }
+  handleIncomeStateChange(e) {
+    const newState = this.state;
+    newState.newIncome.admin = e;
     this.setState(newState);
   }
 
@@ -70,7 +94,7 @@ export class IncomeForm extends Component {
             <div className="form-group">
               <label>Befizetés típusa</label>
               <SuperSelect
-                dataSource={this.state.incomeTypes}
+                dataSource={this.state.data.incomeTypes}
                 placeholder="Válassz bevétel típust!"
                 onChange={this.handleIncomeTypeChange}
                 clearable={false}
@@ -100,6 +124,29 @@ export class IncomeForm extends Component {
               </div>
             </div>
           </div>
+          <div className="col-lg-4 col-xs-12">
+            <div className="form-group">
+              <label>Ügyintéző</label>
+              <SuperSelect
+                dataSource={this.state.data.admins}
+                placeholder="Válassz ügyintézőt!"
+                onChange={this.handleAdminChange}
+                clearable={false}
+                />
+            </div>
+          </div>
+          <div className="col-lg-4 col-xs-12">
+            <div className="form-group">
+              <label>Státusz</label>
+              <SuperSelect
+                dataSource={this.state.data.incomeStaus}
+                placeholder="Válassz státuszt!"
+                onChange={this.handleIncomeStateChange}
+                clearable={false}
+                />
+            </div>
+          </div>
+
           {/* <div className="col-lg-4 col-xs-12">
             <div className="form-group">
               <label>Egyéb</label>
