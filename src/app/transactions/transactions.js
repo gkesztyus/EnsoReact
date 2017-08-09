@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {IncomeForm} from './incomeForm';
 import {Nav, NavItem} from 'react-bootstrap';
-// import ExpenseForm from './expenseForm';
+import {ExpenseForm} from './expenseForm';
 
 export class Transactions extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export class Transactions extends Component {
                 <NavItem className={this.state.transactionType==='expense' ? 'active' : ''} eventKey="expense">Kiadás</NavItem>
               </Nav>
               <div className={this.state.transactionType === 'expense' ? 'visible' : 'hidden'}>
-                expense
+                <ExpenseForm/>
               </div>
               <div className={this.state.transactionType === 'income' ? 'visible' : 'hidden'}>
                 <IncomeForm/>
