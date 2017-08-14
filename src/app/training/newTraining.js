@@ -1,11 +1,13 @@
-/* eslint-enable */
+/* eslint-disable */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
 import SuperSelect from 'react-super-select';
-import moment from 'moment';
+import DatePicker from 'material-ui/DatePicker';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import 'react-super-select/lib/react-super-select.css';
 /* https://github.com/Hacker0x01/react-datepicker
 https://hacker0x01.github.io/react-datepicker/#example-5 */
@@ -15,6 +17,11 @@ const styles = {
   training: {
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  dropDown: {
+    customWidth: {
+      width: 400
+    }
   }
 };
 
@@ -24,12 +31,12 @@ export class NewTraining extends Component {
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleThemeChange = this.handleThemeChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleLeadsChange = this.handleLeadsChange.bind(this);
     this.handleParticipantsChange = this.handleParticipantsChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       newTrainingData: {
-        date: moment(),
+        date: null,
         leads: [],
         participants: [],
         theme: ''
@@ -56,26 +63,35 @@ export class NewTraining extends Component {
     newState.newTrainingData.theme = e.target.value;
     this.setState(newState);
   }
-  handleDateChange(e) {
+  handleLeadsChange(event, index, value) {
     const newState = this.state;
-    newState.newTrainingData.date = e;
+    newState.newTrainingData.leads = value;
     this.setState(newState);
   }
-  handleLeadsChange(e) {
+  handleParticipantsChange(event, index, value) {
     const newState = this.state;
-    newState.newTrainingData.leads = e;
+    newState.newTrainingData.participants = value;
     this.setState(newState);
   }
-  handleParticipantsChange(e) {
+  handleChange(event, date) {
     const newState = this.state;
-    newState.newTrainingData.participants = e;
+    newState.newTrainingData.date = date;
     this.setState(newState);
   }
   render() {
+    const listOfPeople = [];
+    for (const person of this.state.data.people) {
+      listOfPeople.push(<MenuItem value={person.value} key={person.id} primaryText={person.name}/>);
+    }
+    /* for (let i = 0; i < 100; i++) {
+      listOfPeople.push(<MenuItem value={i} key={i} primaryText={`Item ${i}`}/>);
+    } */
+    console.log(this.state.data.people);
+
     return (
       <div style={styles.training}>
         <div className="panel panel-default">
-          <code>{JSON.stringify(this.state, undefined, 2)}</code>
+          // <code>{JSON.stringify(this.state, undefined, 2)}</code>
           <div className="panel-heading">
               Új edzés felvétele
           </div>
@@ -83,66 +99,57 @@ export class NewTraining extends Component {
             <form role="form">
               <div className="row">
                 <div className="col-lg-2 col-xs-12">
-                  <div className="form-group">
-                    <label>Edzés időpontja</label>
-                    <div className="hidden-xs">
-                      <DatePicker
-                        onChange={this.handleDateChange}
-                        selected={this.state.newTrainingData.date}
-                        locale="hu-hu"
-                        todayButton={'Mai napon'}
-                        dateFormat="YYYY/MM/DD"
-                        />
-                    </div>
-                    <div className="hidden-sm hidden-md hidden-lg">
-                      <DatePicker
-                        onChange={this.handleDateChange}
-                        selected={this.state.newTrainingData.date}
-                        todayButton={'Mai napon'}
-                        dateFormat="YYYY/MM/DD"
-                        locale="hu-hu"
-                        withPortal
-                        />
-                    </div>
-                  </div>
+                  <DatePicker
+                    autoOk
+                    floatingLabelText="Edzés időpontja"
+                    value={this.state.newTrainingData.date}
+                    onChange={this.handleChange}
+                    />
                 </div>
                 <div className="col-lg-3 col-sm-6 col-xs-12">
                   <div className="form-group">
-                    <label>Edzésvezető</label>
-                    {/* https://github.com/alsoscotland/react-super-select
-                        http://alsoscotland.github.io/react-super-select/react-super-select-examples.html#multiselect
-                        http://alsoscotland.github.io/react-super-select/annotated-source.html */}
-                    <SuperSelect
-                      dataSource={this.state.data.people}
-                      placeholder="Válassz edzésvezetőt!"
-                      onChange={this.handleLeadsChange}
+                    <label>Edzés vezető</label>
+                    <DropDownMenu
                       multiple
-                      keepOpenOnSelection
-                      />
+                      maxHeight={300}
+                      value={this.state.newTrainingData.leads}
+                      onChange={this.handleLeadsChange}
+                      autoWidth={false}
+                      style={styles.dropDown.customWidth}
+                      >
+                      {listOfPeople}
+                    </DropDownMenu>
                   </div>
                 </div>
                 <div className="col-lg-3 col-sm-6 col-xs-12">
                   <div className="form-group">
                     <label>Résztvevők</label>
-                    <SuperSelect
-                      dataSource={this.state.data.people}
-                      placeholder="Válassz résztvevőket!"
-                      onChange={this.handleParticipantsChange}
+                    <DropDownMenu
                       multiple
-                      keepOpenOnSelection
-                      />
+                      maxHeight={300}
+                      value={this.state.newTrainingData.participants}
+                      onChange={this.handleParticipantsChange}
+                      autoWidth={false}
+                      style={styles.dropDown.customWidth}
+                      >
+                      {listOfPeople}
+                    </DropDownMenu>
                   </div>
                 </div>
                 <div className="col-lg-4 col-xs-12">
-                  <div className="form-group">
-                    <label>Edzés témája</label>
-                    <textarea name="theme" value={this.state.newTrainingData.theme} onChange={this.handleThemeChange} className="form-control" rows="3"/>
-                  </div>
+                  <TextField
+                    floatingLabelText="Edzés témája"
+                    multiLine
+                    rows={3}
+                    rowsMax={5}
+                    />
                 </div>
                 <div className="col-xs-12">
                   <div className="btn-group" role="group">
                     <button type="button" className="btn btn-primary" onClick={this.handleSave}>Mentés</button>
                     <button type="button" className="btn btn-default" onClick={this.handleCancel}>Mégsem</button>
+                    <RaisedButton label="Primary" primary/>
+                    <RaisedButton label="Secondary" secondary/>
                   </div>
                 </div>
               </div>

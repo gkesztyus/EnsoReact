@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {NewTraining} from './newTraining';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
   training: {
@@ -34,6 +35,7 @@ export class Training extends Component {
         </div>
         <div className={this.state.newTrainingVisible ? 'hidden' : ''}>
           <button type="button" className="btn btn-primary" onClick={this.handleToggleNewTraining}>Edzés hozzáadása</button>
+          <RaisedButton label="Default"/>
         </div>
       </div>
     );
