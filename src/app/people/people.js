@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {NewPerson} from './newPerson';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
   person: {
@@ -33,7 +34,7 @@ export class People extends Component {
           <NewPerson onCancel={this.handleToggleNewPerson}/>
         </div>
         <div className={this.state.newPersonVisible ? 'hidden' : ''}>
-          <button type="button" className="btn btn-primary" onClick={this.handleToggleNewPerson}>Személy hozzáadása</button>
+          <RaisedButton label="Személy hozzáadása" onClick={this.handleToggleNewPerson} primary/>
         </div>
       </div>
     );

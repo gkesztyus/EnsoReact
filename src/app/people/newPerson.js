@@ -1,13 +1,11 @@
 /* eslint-enable */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import 'react-super-select/lib/react-super-select.css';
-/* https://github.com/Hacker0x01/react-datepicker
-https://hacker0x01.github.io/react-datepicker/#example-5 */
 
 const styles = {
   person: {
@@ -78,9 +76,9 @@ export class NewPerson extends Component {
     newState.newPersonData[e.target.name] = e.target.value;
     this.setState(newState);
   }
-  handleBirthDayChange(e) {
+  handleBirthDayChange(e, date) {
     const newState = this.state;
-    newState.newPersonData.birthDay = e;
+    newState.newPersonData.birthDay = date;
     this.setState(newState);
   }
   handleCancel() {
@@ -102,34 +100,19 @@ export class NewPerson extends Component {
             <form role="form">
               <div className="row">
                 <div className="col-lg-4 col-xs-12">
-                  <div className="form-group">
-                    <label>Név</label>
-                    <input name="name" value={this.state.newPersonData.name} onChange={this.handleSimpleInputChange} className="form-control"/>
-                  </div>
+                  <TextField
+                    floatingLabelText="Név"
+                    onChange={this.handleSimpleInputChange}
+                    value={this.state.newPersonData.name}
+                    />
                 </div>
                 <div className="col-lg-4 col-xs-12">
-                  <div className="form-group">
-                    <label>Születési dátum</label>
-                    <div className="hidden-xs">
-                      <DatePicker
-                        onChange={this.handleBirthDayChange}
-                        selected={this.state.newPersonData.birthDay}
-                        locale="hu-hu"
-                        todayButton={'Mai napon'}
-                        dateFormat="YYYY/MM/DD"
-                        />
-                    </div>
-                    <div className="hidden-sm hidden-md hidden-lg">
-                      <DatePicker
-                        onChange={this.handleBirthDayChange}
-                        selected={this.state.newPersonData.birthDay}
-                        todayButton={'Mai napon'}
-                        dateFormat="YYYY/MM/DD"
-                        locale="hu-hu"
-                        withPortal
-                        />
-                    </div>
-                  </div>
+                  <DatePicker
+                    autoOk
+                    floatingLabelText="Születési dátum"
+                    value={this.state.newPersonData.birthDay}
+                    onChange={this.handleBirthDayChange}
+                    />
                 </div>
                 <div className="col-lg-4 col-xs-12">
                   <div className="form-group">
@@ -154,14 +137,12 @@ export class NewPerson extends Component {
                               <td>{item.name}</td>
                               <td>
                                 <div className="pull-left">
-                                  <DatePicker
+                                  {/* <DatePicker
+                                    autoOk
+                                    floatingLabelText="Kiadás dátuma"
+                                    value={this.state.newPersonData.rankDates[item.value]}
                                     onChange={this.handleRankHistoryDateChange[item.value]}
-                                    selected={this.state.newPersonData.rankDates[item.value]}
-                                    todayButton={'Mai napon'}
-                                    dateFormat="YYYY/MM/DD"
-                                    locale="hu-hu"
-                                    withPortal
-                                    />
+                                    /> */}
                                 </div>
                                 <button style={styles.deleteButton} onClick={this.handleRankDelete[item.value]} className={'pull-left btn btn-link ' + (this.state.newPersonData.rankDates[item.value] ? 'show' : 'hidden')}>
                                   <span className="glyphicon glyphicon-remove"/>

@@ -35,7 +35,7 @@ export class NewTraining extends Component {
     this.handleThemeChange = this.handleThemeChange.bind(this);
     this.handleLeadsChange = this.handleLeadsChange.bind(this);
     this.handleParticipantsChange = this.handleParticipantsChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.state = {
       newTrainingData: {
         date: null,
@@ -75,7 +75,7 @@ export class NewTraining extends Component {
     newState.newTrainingData.participants = value;
     this.setState(newState);
   }
-  handleChange(event, date) {
+  handleDateChange(event, date) {
     const newState = this.state;
     newState.newTrainingData.date = date;
     this.setState(newState);
@@ -103,7 +103,7 @@ export class NewTraining extends Component {
                     autoOk
                     floatingLabelText="Edzés időpontja"
                     value={this.state.newTrainingData.date}
-                    onChange={this.handleChange}
+                    onChange={this.handleDateChange}
                     />
                 </div>
                 <div className="col-lg-3 col-sm-6 col-xs-12">

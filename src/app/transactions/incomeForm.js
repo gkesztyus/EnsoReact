@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import SuperSelect from 'react-super-select';
+import DatePicker from 'material-ui/DatePicker';
 
 export class IncomeForm extends Component {
   constructor(props) {
@@ -79,14 +79,11 @@ export class IncomeForm extends Component {
         <div className="row">
           <div className="col-lg-4 col-xs-12">
             <div className="form-group">
-              <label>Befizetés dátuma</label>
               <DatePicker
-                onChange={this.handleTransactionDateChange}
+                autoOk
+                floatingLabelText="Befizetés dátuma"
                 selected={this.state.newIncome.transactionDate}
-                locale="hu-hu"
-                todayButton={'Mai napon'}
-                dateFormat="YYYY/MM/DD"
-                withPortal
+                onChange={this.handleTransactionDateChange}
                 />
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker from 'material-ui/DatePicker';
 import moment from 'moment';
 import SuperSelect from 'react-super-select';
 
@@ -48,9 +48,9 @@ export class ExpenseForm extends Component {
     newState.newExpense.admin = e;
     this.setState(newState);
   }
-  handleExpenseDateChange(e) {
+  handleExpenseDateChange(e, date) {
     const newState = this.state;
-    newState.newExpense.transactionDate = e;
+    newState.newExpense.transactionDate = date;
     this.setState(newState);
   }
   handleSimpleInputChange(e) {
@@ -71,14 +71,11 @@ export class ExpenseForm extends Component {
         <div className="row">
           <div className="col-lg-4 col-xs-12">
             <div className="form-group">
-              <label>Kiadás dátuma</label>
               <DatePicker
-                onChange={this.handleTransactionDateChange}
-                selected={this.state.newExpense.transactionDate}
-                locale="hu-hu"
-                todayButton={'Mai napon'}
-                dateFormat="YYYY/MM/DD"
-                withPortal
+                autoOk
+                floatingLabelText="Kiadás dátuma"
+                value={this.state.newExpense.transactionDate}
+                onChange={this.handleExpenseDateChange}
                 />
             </div>
           </div>
