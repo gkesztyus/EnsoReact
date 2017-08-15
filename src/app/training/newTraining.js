@@ -130,7 +130,6 @@ export class NewTraining extends Component {
                   <TextField
                     floatingLabelText="Edzés témája"
                     multiLine
-                    rows={3}
                     rowsMax={5}
                     />
                 </div>

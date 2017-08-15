@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import 'react-super-select/lib/react-super-select.css';
 
@@ -16,8 +18,8 @@ const styles = {
     padding: '2px 10px'
   },
   rankHistoryBox: {
-    overflowY: 'scroll',
-    height: '400px',
+    overflowY: 'auto',
+    maxHeight: '400px',
     display: 'block'
   },
   tableBody: {
@@ -33,6 +35,7 @@ export class NewPerson extends Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
     this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
+    this.handleCurrentRankChange = this.handleCurrentRankChange.bind(this);
 
     this.state = {
       newPersonData: {
@@ -40,6 +43,7 @@ export class NewPerson extends Component {
         birthDay: moment(),
         phoneNumber: '',
         email: '',
+        currentRank: {},
         rankDates: {'10kyu': '', '9kyu': '', '8kyu': '', '7kyu': '', '6kyu': '', '5kyu': '', '4kyu': '', '3kyu': '', '2kyu': '', '1kyu': '', '1dan': '', '2dan': '', '3dan': '', '4dan': '', '5dan': '', '6dan': '', '7dan': '', '8dan': '', '9dan': '', '10dan': '', '11dan': '', '12dan': '', '13dan': '', '14dan': '', '15dan': ''}
       },
       data: {
@@ -60,7 +64,7 @@ export class NewPerson extends Component {
       this.handleRankDelete[rank.value] = this.onRankDelete.bind(this, rank.value);
     });
   }
-  onRankHistoryDateChange(fieldName, date) {
+  onRankHistoryDateChange(fieldName, e, date) {
     const newState = this.state;
     newState.newPersonData.rankDates[fieldName] = date;
     this.setState(newState);
@@ -81,6 +85,18 @@ export class NewPerson extends Component {
     newState.newPersonData.birthDay = date;
     this.setState(newState);
   }
+  handleCurrentRankChange(event, index, value) {
+    const newState = this.state;
+    let id = '';
+    for (const rank of this.state.data.availableRanks) {
+      if (rank.value === value) {
+        id = rank.id;
+        break;
+      }
+    }
+    newState.newPersonData.currentRank = {value, id};
+    this.setState(newState);
+  }
   handleCancel() {
     this.props.onCancel();
   }
@@ -89,6 +105,12 @@ export class NewPerson extends Component {
   }
 
   render() {
+    const listOfRanks = [];
+    listOfRanks.push(<MenuItem value="none" key={-1} primaryText="Nincs"/>);
+    for (const rank of this.state.data.availableRanks) {
+      listOfRanks.push(<MenuItem value={rank.value} key={rank.id} primaryText={rank.name}/>);
+    }
+
     return (
       <div style={styles.person}>
         <div className="panel panel-default">
@@ -102,6 +124,7 @@ export class NewPerson extends Component {
                 <div className="col-lg-4 col-xs-12">
                   <TextField
                     floatingLabelText="Név"
+                    name="name"
                     onChange={this.handleSimpleInputChange}
                     value={this.state.newPersonData.name}
                     />
@@ -115,41 +138,57 @@ export class NewPerson extends Component {
                     />
                 </div>
                 <div className="col-lg-4 col-xs-12">
-                  <div className="form-group">
-                    <label>Telefonszám</label>
-                    <input type="tel" name="phoneNumber" value={this.state.newPersonData.phoneNumber} onChange={this.handleSimpleInputChange} className="form-control"/>
-                  </div>
+                  <TextField
+                    floatingLabelText="Telefonszám"
+                    name="phoneNumber"
+                    onChange={this.handleSimpleInputChange}
+                    value={this.state.newPersonData.phoneNumber}
+                    />
                 </div>
                 <div className="col-lg-4 col-xs-12">
-                  <div className="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" value={this.state.newPersonData.email} onChange={this.handleSimpleInputChange} className="form-control"/>
-                  </div>
+                  <TextField
+                    floatingLabelText="Email cím"
+                    onChange={this.handleSimpleInputChange}
+                    name="email"
+                    value={this.state.newPersonData.email}
+                    />
                 </div>
                 <div className="col-lg-4 col-xs-12">
+                  <SelectField
+                    floatingLabelText="Aktuális fokozat"
+                    value={this.state.newPersonData.currentRank.value}
+                    onChange={this.handleCurrentRankChange}
+                    >
+                    {listOfRanks}
+                  </SelectField>
+                </div>
+                <div className={'col-lg-4 col-xs-12 ' + (this.state.newPersonData.currentRank.value ? '' : 'hidden')}>
                   <div className="form-group">
                     <label>Fokozat történet</label>
                     <div className="table-responsive">
                       <table className="table table-striped" style={styles.rankHistoryBox}>
                         <tbody style={styles.tableBody}>
                           {this.state.data.availableRanks.map((item, index) => (
-                            <tr key={index}>
-                              <td>{item.name}</td>
+                            <tr key={index} className={this.state.newPersonData.currentRank.id >= item.id ? '' : 'hidden'}>
+                              <td>
+                                {item.name}
+                              </td>
                               <td>
                                 <div className="pull-left">
-                                  {/* <DatePicker
+                                  <DatePicker
                                     autoOk
-                                    floatingLabelText="Kiadás dátuma"
-                                    value={this.state.newPersonData.rankDates[item.value]}
+                                    hintText="Megszerzés dátuma"
+                                    value={this.state.newPersonData.rankDates[item.value] ? this.state.newPersonData.rankDates[item.value] : null}
                                     onChange={this.handleRankHistoryDateChange[item.value]}
-                                    /> */}
+                                    fullWidth
+                                    />
                                 </div>
                                 <button style={styles.deleteButton} onClick={this.handleRankDelete[item.value]} className={'pull-left btn btn-link ' + (this.state.newPersonData.rankDates[item.value] ? 'show' : 'hidden')}>
                                   <span className="glyphicon glyphicon-remove"/>
                                 </button>
                               </td>
                             </tr>
-                          ))}
+                        ))}
                         </tbody>
                       </table>
                     </div>
