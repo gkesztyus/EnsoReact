@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import 'react-super-select/lib/react-super-select.css';
 
@@ -195,10 +196,8 @@ export class NewPerson extends Component {
                   </div>
                 </div>
                 <div className="col-xs-12">
-                  <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-primary" onClick={this.handleSave}>Mentés</button>
-                    <button type="button" className="btn btn-default" onClick={this.handleCancel}>Mégsem</button>
-                  </div>
+                  <RaisedButton label="Mentés" onClick={this.handleSave} primary/>
+                  <RaisedButton label="Mégsem" onClick={this.handleCancel} default/>
                 </div>
               </div>
             </form>

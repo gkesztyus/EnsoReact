@@ -134,10 +134,8 @@ export class NewTraining extends Component {
                     />
                 </div>
                 <div className="col-xs-12">
-                  <div className="btn-group" role="group">
-                    <RaisedButton label="Mentés" onClick={this.handleSave} primary/>
-                    <RaisedButton label="Mégsem" onClick={this.handleCancel} default/>
-                  </div>
+                  <RaisedButton label="Mentés" onClick={this.handleSave} primary/>
+                  <RaisedButton label="Mégsem" onClick={this.handleCancel} default/>
                 </div>
               </div>
             </form>
