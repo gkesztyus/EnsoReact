@@ -115,7 +115,7 @@ export class NewPerson extends Component {
     return (
       <div style={styles.person}>
         <div className="panel panel-default">
-          <code>{JSON.stringify(this.state, undefined, 2)}</code>
+          { /* <code>{JSON.stringify(this.state, undefined, 2)}</code> */ }
           <div className="panel-heading">
               Új tanuló felvétele
           </div>
