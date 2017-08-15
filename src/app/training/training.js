@@ -34,8 +34,7 @@ export class Training extends Component {
           <NewTraining onCancel={this.handleToggleNewTraining}/>
         </div>
         <div className={this.state.newTrainingVisible ? 'hidden' : ''}>
-          <button type="button" className="btn btn-primary" onClick={this.handleToggleNewTraining}>Edzés hozzáadása</button>
-          <RaisedButton label="Default"/>
+          <RaisedButton label="Edzés hozzáadása" onClick={this.handleToggleNewTraining} primary/>
         </div>
       </div>
     );

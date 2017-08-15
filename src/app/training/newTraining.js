@@ -1,12 +1,11 @@
-/* eslint-disable */
+/* eslint-enable */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SuperSelect from 'react-super-select';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import DropDownMenu from 'material-ui/DropDownMenu';
 
 import 'react-super-select/lib/react-super-select.css';
 /* https://github.com/Hacker0x01/react-datepicker
@@ -20,8 +19,11 @@ const styles = {
   },
   dropDown: {
     customWidth: {
-      width: 400
+      width: 'auto'
     }
+  },
+  paper: {
+    padding: 20
   }
 };
 
@@ -86,19 +88,17 @@ export class NewTraining extends Component {
     /* for (let i = 0; i < 100; i++) {
       listOfPeople.push(<MenuItem value={i} key={i} primaryText={`Item ${i}`}/>);
     } */
-    console.log(this.state.data.people);
 
     return (
       <div style={styles.training}>
         <div className="panel panel-default">
-          // <code>{JSON.stringify(this.state, undefined, 2)}</code>
           <div className="panel-heading">
               Új edzés felvétele
           </div>
           <div className="panel-body">
             <form role="form">
               <div className="row">
-                <div className="col-lg-2 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <DatePicker
                     autoOk
                     floatingLabelText="Edzés időpontja"
@@ -107,36 +107,26 @@ export class NewTraining extends Component {
                     />
                 </div>
                 <div className="col-lg-3 col-sm-6 col-xs-12">
-                  <div className="form-group">
-                    <label>Edzés vezető</label>
-                    <DropDownMenu
-                      multiple
-                      maxHeight={300}
-                      value={this.state.newTrainingData.leads}
-                      onChange={this.handleLeadsChange}
-                      autoWidth={false}
-                      style={styles.dropDown.customWidth}
-                      >
-                      {listOfPeople}
-                    </DropDownMenu>
-                  </div>
+                  <SelectField
+                    multiple
+                    floatingLabelText="Edzés vezető"
+                    value={this.state.newTrainingData.leads}
+                    onChange={this.handleLeadsChange}
+                    >
+                    {listOfPeople}
+                  </SelectField>
                 </div>
                 <div className="col-lg-3 col-sm-6 col-xs-12">
-                  <div className="form-group">
-                    <label>Résztvevők</label>
-                    <DropDownMenu
-                      multiple
-                      maxHeight={300}
-                      value={this.state.newTrainingData.participants}
-                      onChange={this.handleParticipantsChange}
-                      autoWidth={false}
-                      style={styles.dropDown.customWidth}
-                      >
-                      {listOfPeople}
-                    </DropDownMenu>
-                  </div>
+                  <SelectField
+                    multiple
+                    floatingLabelText="Résztvevők"
+                    value={this.state.newTrainingData.participants}
+                    onChange={this.handleParticipantsChange}
+                    >
+                    {listOfPeople}
+                  </SelectField>
                 </div>
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <TextField
                     floatingLabelText="Edzés témája"
                     multiLine
@@ -146,10 +136,8 @@ export class NewTraining extends Component {
                 </div>
                 <div className="col-xs-12">
                   <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-primary" onClick={this.handleSave}>Mentés</button>
-                    <button type="button" className="btn btn-default" onClick={this.handleCancel}>Mégsem</button>
-                    <RaisedButton label="Primary" primary/>
-                    <RaisedButton label="Secondary" secondary/>
+                    <RaisedButton label="Mentés" onClick={this.handleSave} primary/>
+                    <RaisedButton label="Mégsem" onClick={this.handleCancel} default/>
                   </div>
                 </div>
               </div>
