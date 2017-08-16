@@ -16,7 +16,7 @@ const styles = {
     textAlign: 'center'
   },
   deleteButton: {
-    padding: '2px 10px'
+    padding: '2px'
   },
   rankHistoryBox: {
     overflowY: 'auto',
@@ -26,6 +26,13 @@ const styles = {
   tableBody: {
     display: 'table',
     width: '100%'
+  },
+  historyRows: {
+    paddingTop: 0,
+    paddingBottom: 0
+  },
+  paddedHistoryRows: {
+    paddingTop: 16
   }
 };
 
@@ -122,7 +129,7 @@ export class NewPerson extends Component {
           <div className="panel-body">
             <form role="form">
               <div className="row">
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <TextField
                     floatingLabelText="Név"
                     name="name"
@@ -130,7 +137,7 @@ export class NewPerson extends Component {
                     value={this.state.newPersonData.name}
                     />
                 </div>
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <DatePicker
                     autoOk
                     floatingLabelText="Születési dátum"
@@ -138,7 +145,7 @@ export class NewPerson extends Component {
                     onChange={this.handleBirthDayChange}
                     />
                 </div>
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <TextField
                     floatingLabelText="Telefonszám"
                     name="phoneNumber"
@@ -146,7 +153,7 @@ export class NewPerson extends Component {
                     value={this.state.newPersonData.phoneNumber}
                     />
                 </div>
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <TextField
                     floatingLabelText="Email cím"
                     onChange={this.handleSimpleInputChange}
@@ -154,7 +161,7 @@ export class NewPerson extends Component {
                     value={this.state.newPersonData.email}
                     />
                 </div>
-                <div className="col-lg-4 col-xs-12">
+                <div className="col-lg-3 col-sm-6 col-xs-12">
                   <SelectField
                     floatingLabelText="Aktuális fokozat"
                     value={this.state.newPersonData.currentRank.value}
@@ -163,7 +170,7 @@ export class NewPerson extends Component {
                     {listOfRanks}
                   </SelectField>
                 </div>
-                <div className={'col-lg-4 col-xs-12 ' + (this.state.newPersonData.currentRank.value ? '' : 'hidden')}>
+                <div className={'col-lg-3 col-sm-6 col-xs-12 ' + (this.state.newPersonData.currentRank.value ? '' : 'hidden')}>
                   <div className="form-group">
                     <label>Fokozat történet</label>
                     <div className="table-responsive">
@@ -171,10 +178,10 @@ export class NewPerson extends Component {
                         <tbody style={styles.tableBody}>
                           {this.state.data.availableRanks.map((item, index) => (
                             <tr key={index} className={this.state.newPersonData.currentRank.id >= item.id ? '' : 'hidden'}>
-                              <td>
+                              <td style={styles.paddedHistoryRows}>
                                 {item.name}
                               </td>
-                              <td>
+                              <td style={styles.historyRows}>
                                 <div className="pull-left">
                                   <DatePicker
                                     autoOk
@@ -184,8 +191,10 @@ export class NewPerson extends Component {
                                     fullWidth
                                     />
                                 </div>
+                              </td>
+                              <td style={styles.paddedHistoryRows}>
                                 <button style={styles.deleteButton} onClick={this.handleRankDelete[item.value]} className={'pull-left btn btn-link ' + (this.state.newPersonData.rankDates[item.value] ? 'show' : 'hidden')}>
-                                  <span className="glyphicon glyphicon-remove"/>
+                                  <i className="material-icons">close</i>
                                 </button>
                               </td>
                             </tr>
