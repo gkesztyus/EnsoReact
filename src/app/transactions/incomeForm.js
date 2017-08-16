@@ -1,7 +1,10 @@
+/* eslint-enable */
 import React, {Component} from 'react';
 import moment from 'moment';
-import SuperSelect from 'react-super-select';
 import DatePicker from 'material-ui/DatePicker';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
 
 export class IncomeForm extends Component {
   constructor(props) {
@@ -19,41 +22,43 @@ export class IncomeForm extends Component {
           {id: 2, name: 'Alkalmi', value: 'occasionaly', price: 1500},
           {id: 3, name: 'Egyéb', value: 'other', price: ''}
         ],
-        incomeStaus: [
+        incomeStatus: [
           {id: 0, name: 'Kézben', value: 'inHand'},
           {id: 1, name: 'Kasszában', value: 'inSafe'}
         ]
       },
-      uniquePriceEnterAllowed: 'false',
+      uniquePriceEnterAllowed: false,
       newIncome: {
         transactionDate: moment(),
         incomeType: '',
         uniqueIncomeType: '',
         incomePrice: '',
-        admin: ''
+        admin: '',
+        status: ''
       }
     };
     this.handleIncomeTypeChange = this.handleIncomeTypeChange.bind(this);
     this.handleIncomeDateChange = this.handleIncomeDateChange.bind(this);
     this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
     this.handleAdminChange = this.handleAdminChange.bind(this);
-    this.handleIncomeStateChange = this.handleIncomeStateChange.bind(this);
+    this.handleIncomeStatusChange = this.handleIncomeStatusChange.bind(this);
   }
-  handleIncomeTypeChange(e) {
+  handleIncomeTypeChange(e, k, payload) {
     const newState = this.state;
-    newState.newIncome.incomeType = e;
-    if (e.value === 'other') {
+    newState.newIncome.incomeType = payload;
+    if (payload.value === 'other') {
       newState.uniquePriceEnterAllowed = false;
     } else {
       newState.uniquePriceEnterAllowed = true;
       newState.newIncome.uniqueIncomeType = '';
-      newState.newIncome.incomePrice = e.price;
+      newState.newIncome.incomePrice = payload.price;
     }
     this.setState(newState);
   }
-  handleAdminChange(e) {
+  handleAdminChange(e, k, payload) {
+    console.log(payload);
     const newState = this.state;
-    newState.newIncome.admin = e;
+    newState.newIncome.admin = payload;
     this.setState(newState);
   }
   handleIncomeDateChange(e) {
@@ -66,13 +71,27 @@ export class IncomeForm extends Component {
     newState.newIncome[e.target.name] = e.target.value;
     this.setState(newState);
   }
-  handleIncomeStateChange(e) {
+  handleIncomeStatusChange(e, k, payload) {
     const newState = this.state;
-    newState.newIncome.admin = e;
+    newState.newIncome.status = payload;
     this.setState(newState);
   }
 
   render() {
+    const incomeTypeList = [];
+    for (const incomeType of this.state.data.incomeTypes) {
+      incomeTypeList.push(<MenuItem value={incomeType} key={incomeType.id} primaryText={incomeType.name}/>);
+    }
+
+    const incomeAdminList = [];
+    for (const admin of this.state.data.admins) {
+      incomeAdminList.push(<MenuItem value={admin.value} key={admin.id} primaryText={admin.name}/>);
+    }
+    const incomeStatusList = [];
+    for (const status of this.state.data.incomeStatus) {
+      incomeStatusList.push(<MenuItem value={status} key={status.id} primaryText={status.name}/>);
+    }
+
     return (
       <form role="form">
         <code>{JSON.stringify(this.state, undefined, 2)}</code>
@@ -88,60 +107,48 @@ export class IncomeForm extends Component {
             </div>
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Befizetés típusa</label>
-              <SuperSelect
-                dataSource={this.state.data.incomeTypes}
-                placeholder="Válassz bevétel típust!"
-                onChange={this.handleIncomeTypeChange}
-                clearable={false}
-                />
-            </div>
+            <SelectField
+              floatingLabelText="Befizetés típusa"
+              value={this.state.newIncome.incomeType}
+              onChange={this.handleIncomeTypeChange}
+              >
+              {incomeTypeList}
+            </SelectField>
           </div>
           <div className={'col-lg-4 col-xs-12 ' + (this.state.newIncome.incomeType.value === 'other' ? 'visible' : 'hidden')}>
-            <div className="form-group">
-              <label>Befizetés megnevezése</label>
-              <input name="uniqueIncomeType" value={this.state.newIncome.uniqueIncomeType} onChange={this.handleSimpleInputChange} className="form-control"/>
-            </div>
+            <TextField
+              floatingLabelText="Befizetés megnevezése"
+              name="uniqueIncomeType"
+              onChange={this.handleSimpleInputChange}
+              value={this.state.newIncome.uniqueIncomeType}
+              />
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Befizetés összege</label>
-              <div className="input-group">
-                <input
-                  type="number"
-                  name="incomePrice"
-                  value={this.state.newIncome.incomePrice}
-                  onChange={this.handleSimpleInputChange}
-                  disabled={this.state.uniquePriceEnterAllowed}
-                  className="form-control"
-                  style={{zIndex: 0}}
-                  />
-                <div className="input-group-addon">Ft</div>
-              </div>
-            </div>
+            <TextField
+              floatingLabelText="Befizetés összege (Ft)"
+              name="incomePrice"
+              onChange={this.handleSimpleInputChange}
+              value={this.state.newIncome.incomePrice}
+              disabled={this.state.uniquePriceEnterAllowed}
+              />
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Ügyintéző</label>
-              <SuperSelect
-                dataSource={this.state.data.admins}
-                placeholder="Válassz ügyintézőt!"
-                onChange={this.handleAdminChange}
-                clearable={false}
-                />
-            </div>
+            <SelectField
+              floatingLabelText="Ügyintéző"
+              value={this.state.newIncome.admin}
+              onChange={this.handleAdminChange}
+              >
+              {incomeAdminList}
+            </SelectField>
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Státusz</label>
-              <SuperSelect
-                dataSource={this.state.data.incomeStaus}
-                placeholder="Válassz státuszt!"
-                onChange={this.handleIncomeStateChange}
-                clearable={false}
-                />
-            </div>
+            <SelectField
+              floatingLabelText="Befizetés státusza"
+              value={this.state.newIncome.status}
+              onChange={this.handleIncomeStatusChange}
+              >
+              {incomeStatusList}
+            </SelectField>
           </div>
         </div>
       </form>

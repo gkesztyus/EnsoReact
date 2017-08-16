@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {IncomeForm} from './incomeForm';
 import {Nav, NavItem} from 'react-bootstrap';
 import {ExpenseForm} from './expenseForm';
+import RaisedButton from 'material-ui/RaisedButton';
 
 export class Transactions extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export class Transactions extends Component {
     return (
       <div>
         <div className={this.state.isNewTransactionVisible ? 'hidden' : 'visible'}>
-          <button className="btn btn-primary" onClick={this.handleToggleNewTransactionVisibility}>Új tranzakció rögzítése</button>
+          <RaisedButton label="Új tranzakció rögzítése" onClick={this.handleToggleNewTransactionVisibility} primary/>
         </div>
         <div className={this.state.isNewTransactionVisible ? 'visible' : 'hidden'}>
           <div className="panel panel-default">
