@@ -166,6 +166,7 @@ export class NewPerson extends Component {
                     floatingLabelText="Aktuális fokozat"
                     value={this.state.newPersonData.currentRank.value}
                     onChange={this.handleCurrentRankChange}
+                    floatingLabelStyle={{left: '5px'}}
                     >
                     {listOfRanks}
                   </SelectField>
