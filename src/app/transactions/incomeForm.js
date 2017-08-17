@@ -94,9 +94,9 @@ export class IncomeForm extends Component {
 
     return (
       <form role="form">
-        <code>{JSON.stringify(this.state, undefined, 2)}</code>
+        {/* <code>{JSON.stringify(this.state, undefined, 2)}</code> */}
         <div className="row">
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg-3 col-xs-12">
             <div className="form-group">
               <DatePicker
                 autoOk
@@ -106,7 +106,7 @@ export class IncomeForm extends Component {
                 />
             </div>
           </div>
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg-3 col-xs-12">
             <SelectField
               floatingLabelText="Befizetés típusa"
               value={this.state.newIncome.incomeType}
@@ -115,7 +115,7 @@ export class IncomeForm extends Component {
               {incomeTypeList}
             </SelectField>
           </div>
-          <div className={'col-lg-4 col-xs-12 ' + (this.state.newIncome.incomeType.value === 'other' ? 'visible' : 'hidden')}>
+          <div className={'col-lg-3 col-xs-12 ' + (this.state.newIncome.incomeType.value === 'other' ? 'visible' : 'hidden')}>
             <TextField
               floatingLabelText="Befizetés megnevezése"
               name="uniqueIncomeType"
@@ -123,7 +123,7 @@ export class IncomeForm extends Component {
               value={this.state.newIncome.uniqueIncomeType}
               />
           </div>
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg-3 col-xs-12">
             <TextField
               floatingLabelText="Befizetés összege (Ft)"
               name="incomePrice"
@@ -132,7 +132,7 @@ export class IncomeForm extends Component {
               disabled={this.state.uniquePriceEnterAllowed}
               />
           </div>
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg-3 col-xs-12">
             <SelectField
               floatingLabelText="Ügyintéző"
               value={this.state.newIncome.admin}
@@ -141,7 +141,7 @@ export class IncomeForm extends Component {
               {incomeAdminList}
             </SelectField>
           </div>
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg-3 col-xs-12">
             <SelectField
               floatingLabelText="Befizetés státusza"
               value={this.state.newIncome.status}
