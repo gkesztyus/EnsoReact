@@ -7,10 +7,6 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-import 'react-super-select/lib/react-super-select.css';
-/* https://github.com/Hacker0x01/react-datepicker
-https://hacker0x01.github.io/react-datepicker/#example-5 */
-
 // a mentésnél majd figyelni kell rá hogy az edzésvezetőket belemergeljuk a rásztvevőkbe is..
 const styles = {
   training: {

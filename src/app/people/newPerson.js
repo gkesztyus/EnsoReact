@@ -8,8 +8,6 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import 'react-super-select/lib/react-super-select.css';
-
 const styles = {
   person: {
     fontWeight: 'bold',
