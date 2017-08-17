@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import DatePicker from 'material-ui/DatePicker';
 import moment from 'moment';
-import SuperSelect from 'react-super-select';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -21,7 +20,7 @@ export class ExpenseForm extends Component {
           {id: 1, name: 'Reklám', value: 'commercial', price: ''},
           {id: 2, name: 'Egyéb', value: 'other', price: ''}
         ],
-        expenseStaus: [
+        expenseStatuses: [
           {id: 0, name: 'Kézben', value: 'inHand'},
           {id: 1, name: 'Kifizetve', value: 'paid'}
         ]
@@ -31,14 +30,15 @@ export class ExpenseForm extends Component {
         expenseType: '',
         expenseName: '',
         expensePrice: '',
-        admin: ''
+        admin: '',
+        expenseStatus: ''
       }
     };
     this.handleExpenseTypeChange = this.handleExpenseTypeChange.bind(this);
     this.handleExpenseDateChange = this.handleExpenseDateChange.bind(this);
     this.handleSimpleInputChange = this.handleSimpleInputChange.bind(this);
     this.handleAdminChange = this.handleAdminChange.bind(this);
-    this.handleExpenseStateChange = this.handleExpenseStateChange.bind(this);
+    this.handleExpenseStatusChange = this.handleExpenseStatusChange.bind(this);
   }
   handleExpenseTypeChange(e, k, payload) {
     console.log(e, k, payload);
@@ -62,9 +62,9 @@ export class ExpenseForm extends Component {
     newState.newExpense[e.target.name] = e.target.value;
     this.setState(newState);
   }
-  handleExpenseStateChange(e) {
+  handleExpenseStatusChange(e, k, payload) {
     const newState = this.state;
-    newState.newExpense.admin = e;
+    newState.newExpense.expenseStatus = payload;
     this.setState(newState);
   }
 
@@ -76,6 +76,10 @@ export class ExpenseForm extends Component {
     const adminList = [];
     for (const admin of this.state.data.admins) {
       adminList.push(<MenuItem value={admin} key={admin.id} primaryText={admin.name}/>);
+    }
+    const statusList = [];
+    for (const status of this.state.data.expenseStatuses) {
+      statusList.push(<MenuItem value={status} key={status.id} primaryText={status.name}/>);
     }
     return (
       <form role="form">
@@ -128,15 +132,14 @@ export class ExpenseForm extends Component {
             </SelectField>
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Státusz</label>
-              <SuperSelect
-                dataSource={this.state.data.expenseStaus}
-                placeholder="Válassz státuszt!"
-                onChange={this.handleExpenseStateChange}
-                clearable={false}
-                />
-            </div>
+            <SelectField
+              floatingLabelText="Státusz"
+              value={this.state.newExpense.expenseStatus}
+              onChange={this.handleExpenseStatusChange}
+              name="status"
+              >
+              {statusList}
+            </SelectField>
           </div>
         </div>
       </form>
