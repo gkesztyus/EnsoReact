@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import DatePicker from 'material-ui/DatePicker';
 import moment from 'moment';
 import SuperSelect from 'react-super-select';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 export class ExpenseForm extends Component {
   constructor(props) {
@@ -37,15 +40,16 @@ export class ExpenseForm extends Component {
     this.handleAdminChange = this.handleAdminChange.bind(this);
     this.handleExpenseStateChange = this.handleExpenseStateChange.bind(this);
   }
-  handleExpenseTypeChange(e) {
+  handleExpenseTypeChange(e, k, payload) {
+    console.log(e, k, payload);
     const newState = this.state;
-    newState.newExpense.expenseType = e;
-    newState.newExpense.expensePrice = (newState.newExpense.expensePrice ? newState.newExpense.expensePrice : e.price);
+    newState.newExpense.expenseType = payload;
+    newState.newExpense.expensePrice = (newState.newExpense.expensePrice ? newState.newExpense.expensePrice : payload.price);
     this.setState(newState);
   }
-  handleAdminChange(e) {
+  handleAdminChange(e, k, payload) {
     const newState = this.state;
-    newState.newExpense.admin = e;
+    newState.newExpense.admin = payload;
     this.setState(newState);
   }
   handleExpenseDateChange(e, date) {
@@ -65,9 +69,17 @@ export class ExpenseForm extends Component {
   }
 
   render() {
+    const expenseTypeList = [];
+    for (const expenseType of this.state.data.expenseTypes) {
+      expenseTypeList.push(<MenuItem value={expenseType} key={expenseType.id} primaryText={expenseType.name}/>);
+    }
+    const adminList = [];
+    for (const admin of this.state.data.admins) {
+      adminList.push(<MenuItem value={admin} key={admin.id} primaryText={admin.name}/>);
+    }
     return (
       <form role="form">
-        { /* <code>{JSON.stringify(this.state, undefined, 2)}</code> */}
+        <code>{JSON.stringify(this.state, undefined, 2)}</code>
         <div className="row">
           <div className="col-lg-4 col-xs-12">
             <div className="form-group">
@@ -80,48 +92,40 @@ export class ExpenseForm extends Component {
             </div>
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Kiadás típusa</label>
-              <SuperSelect
-                dataSource={this.state.data.expenseTypes}
-                placeholder="Válassz kiadás típust!"
-                onChange={this.handleExpenseTypeChange}
-                clearable={false}
-                />
-            </div>
+            <SelectField
+              floatingLabelText="Kifizetés típusa"
+              value={this.state.newExpense.expenseType}
+              onChange={this.handleExpenseTypeChange}
+              name="expenseType"
+              >
+              {expenseTypeList}
+            </SelectField>
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Kiadás megnevezése</label>
-              <input name="expenseName" value={this.state.newExpense.expenseName} onChange={this.handleSimpleInputChange} className="form-control"/>
-            </div>
+            <TextField
+              floatingLabelText="Kiadás megnevezése"
+              name="expenseName"
+              onChange={this.handleSimpleInputChange}
+              value={this.state.newExpense.expenseName}
+              />
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Kiadás összege</label>
-              <div className="input-group">
-                <input
-                  type="number"
-                  name="expensePrice"
-                  value={this.state.newExpense.expensePrice}
-                  onChange={this.handleSimpleInputChange}
-                  className="form-control"
-                  style={{zIndex: 0}}
-                  />
-                <div className="input-group-addon">Ft</div>
-              </div>
-            </div>
+            <TextField
+              floatingLabelText="Kiadás összege (Ft)"
+              name="expensePrice"
+              onChange={this.handleSimpleInputChange}
+              value={this.state.newExpense.expensePrice}
+              />
           </div>
           <div className="col-lg-4 col-xs-12">
-            <div className="form-group">
-              <label>Ügyintéző</label>
-              <SuperSelect
-                dataSource={this.state.data.admins}
-                placeholder="Válassz ügyintézőt!"
-                onChange={this.handleAdminChange}
-                clearable={false}
-                />
-            </div>
+            <SelectField
+              floatingLabelText="Ügyintéző"
+              value={this.state.newExpense.admin}
+              onChange={this.handleAdminChange}
+              name="admin"
+              >
+              {adminList}
+            </SelectField>
           </div>
           <div className="col-lg-4 col-xs-12">
             <div className="form-group">
