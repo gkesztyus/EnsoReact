@@ -1,19 +1,33 @@
 /* eslint-disable */
 import React, {Component} from 'react';
 import {IncomeForm} from './incomeForm';
-import {Nav, NavItem} from 'react-bootstrap';
 import {ExpenseForm} from './expenseForm';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Tab, Tabs} from 'material-ui/Tabs';
+import Subheader from 'material-ui/Subheader';
+
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+  slide: {
+    padding: 10,
+    backgroundColor:'white'
+  }
+};
 
 export class Transactions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNewTransactionVisible: false,
-      transactionType: 'income'
+      isNewTransactionVisible: false
     };
     this.handleToggleNewTransactionVisibility = this.handleToggleNewTransactionVisibility.bind(this);
     this.handleTransactionTypeChange = this.handleTransactionTypeChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   handleToggleNewTransactionVisibility() {
     this.setState({
@@ -28,9 +42,15 @@ export class Transactions extends Component {
     console.log(`selected ${eventKey}`);
   }
 
+  handleChange(value) {
+    this.setState({
+      slideIndex: value,
+    });
+  };
+
   render() {
     return (
-      <div>
+      <div className="container">
         <div className={this.state.isNewTransactionVisible ? 'hidden' : 'visible'}>
           <RaisedButton label="Új tranzakció rögzítése" onClick={this.handleToggleNewTransactionVisibility} primary/>
         </div>
@@ -38,19 +58,22 @@ export class Transactions extends Component {
           <div className="panel panel-default">
             <code>{JSON.stringify(this.state, undefined, 2)}</code>
             <div className="panel-heading">
+              <Subheader>
                 Új tranzakció rögzítése
+              </Subheader>
             </div>
             <div className="panel-body">
-              <Nav bsStyle="tabs" activeKey="this.state.transactionType? handleTransactionTypeChange: 'income'" onSelect={this.handleTransactionTypeChange}>
-                <NavItem className={this.state.transactionType==='income' ? 'active' : ''} eventKey="income" href="/home">Bevétel</NavItem>
-                <NavItem className={this.state.transactionType==='expense' ? 'active' : ''} eventKey="expense">Kiadás</NavItem>
-              </Nav>
-              <div className={this.state.transactionType === 'expense' ? 'visible' : 'hidden'}>
-                <ExpenseForm/>
-              </div>
-              <div className={this.state.transactionType === 'income' ? 'visible' : 'hidden'}>
-                <IncomeForm/>
-              </div>
+              <Tabs
+                onChange={this.handleChange}
+                value={this.state.slideIndex}
+              >
+                <Tab label="Befizetés">
+                  <IncomeForm/>
+                </Tab>
+                <Tab label="Kiadás">
+                  <ExpenseForm/>
+                </Tab>
+              </Tabs>
             </div>
           </div>
         </div>

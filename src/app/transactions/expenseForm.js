@@ -67,7 +67,7 @@ export class ExpenseForm extends Component {
   render() {
     return (
       <form role="form">
-        <code>{JSON.stringify(this.state, undefined, 2)}</code>
+        { /* <code>{JSON.stringify(this.state, undefined, 2)}</code> */}
         <div className="row">
           <div className="col-lg-4 col-xs-12">
             <div className="form-group">
