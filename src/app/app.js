@@ -8,7 +8,6 @@ import {Transactions} from './transactions/transactions';
 import {People} from './people/people';
 import {Main} from './main';
 import {Menu} from './menu';
-import {SideDrawer} from './SideDrawer';
 
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -22,14 +21,12 @@ export default class App extends Component {
     this.handleToggle = this.handleToggle.bind(this);
   }
   handleToggle() {
-    console.log(this.state);
     this.setState({sideDrawerIsOpen: !this.state.sideDrawerIsOpen});
   }
   render() {
     return (
       <Router>
         <div>
-          asd:<code>{JSON.stringify(this.state, undefined, 2)}</code>
           <AppBar
             title="Enso dojo"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
@@ -48,10 +45,11 @@ export default class App extends Component {
             open={this.state.sideDrawerIsOpen}
             onRequestChange={this.handleToggle}
           >
-            <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
-            <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
+            <MenuItem onClick={this.handleClose}>Edzések</MenuItem>
+            <MenuItem onClick={this.handleClose}>Tagok</MenuItem>
+            <MenuItem onClick={this.handleClose}>Pénzügyek</MenuItem>
+            <MenuItem onClick={this.handleClose}>Statisztikák</MenuItem>
           </Drawer>
-          <code>{JSON.stringify(this.state, undefined, 2)}</code>
         </div>
       </Router>
     );
