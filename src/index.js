@@ -2,15 +2,9 @@ import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-
-import {Training} from './app/training/training';
-import {Transactions} from './app/transactions/transactions';
-import {People} from './app/people/people';
-import {Main} from './app/main';
-import {Menu} from './app/menu';
-
 import './index.scss';
+
+import App from './app/app.js';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 // import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
@@ -28,17 +22,7 @@ muiTheme.palette.accent1Color = 'deepOrange500'; */
 
 ReactDOM.render(
   <MuiThemeProvider>
-    <Router>
-      <div>
-        <Menu/>
-        <div className="container">
-          <Route exact path="/" component={Main}/>
-          <Route path="/people" component={People}/>
-          <Route path="/trainings" component={Training}/>
-          <Route path="/transactions" component={Transactions}/>
-        </div>
-      </div>
-    </Router>
+    <App/>
   </MuiThemeProvider>,
   document.getElementById('root')
 );
