@@ -6,16 +6,15 @@ const styles = {
     alignItems: 'center',
     backgroundColor: '#1f1f1f'
   },
+  headerImage: {
+    width: '50%',
+    margin: '0 auto',
+    padding: '20px 0'
+  },
   title: {
     flex: 1,
     fontSize: '1.5rem',
     margin: '1rem'
-  },
-  date: {
-    flex: 1,
-    textAlign: 'right',
-    margin: '1rem',
-    color: 'white'
   }
 };
 
@@ -23,14 +22,7 @@ export class Header extends Component {
   render() {
     return (
       <header style={styles.header}>
-        <p style={styles.title}>
-          <a href="https://github.com/FountainJS/generator-fountain-webapp" target="_blank" rel="noopener noreferrer">
-            Fountain Generator
-          </a>
-        </p>
-        <p style={styles.date}>
-          Generated with FountainJS v1.0.0 on Wed Feb 22 2017 09:30:47 GMT+0100 (CET)
-        </p>
+        <img style={styles.headerImage} src="/images/ensoBig.png"/>
       </header>
     );
   }
